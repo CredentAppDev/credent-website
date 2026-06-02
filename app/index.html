@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credent — The agent that teaches. For industry & education.</title>
+  <meta name="description" content="Credent is an agentic teaching platform powered by Emrys AI. Download the desktop app for Windows and macOS." />
+  <link rel="icon" href="assets/emrys-agent.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <canvas id="glow-canvas"></canvas>
+  <div class="bg-wash"></div>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/credent_logo.svg" alt="Credent" />
+        <span>Credent</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">← Main site</a></li>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="download.html" class="btn btn-primary" style="padding:9px 18px;">Get Credent</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-3d" id="hero-3d">
+        <div class="hero-orb" aria-hidden="true"></div>
+      </div>
+      <span class="eyebrow">Beta · Now open</span>
+      <h1>The agent that <span class="gradient-text" data-decrypt="teaches">teaches</span>.<br />For industry &amp; education.</h1>
+      <p class="lead">
+        Meet <strong>Emrys</strong> — the agentic software at the heart of Credent.
+        Not a search box. A patient teacher that explains one step at a time,
+        remembers your session, and guides students and operators alike.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" data-magnetic data-os-download href="download.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span data-os-label>Download Credent</span>
+        </a>
+        <a class="btn btn-ghost" data-magnetic href="features.html">Explore features</a>
+      </div>
+      <p class="os-hint" data-os-hint>Available for Windows · macOS coming soon</p>
+
+      <!-- live stats -->
+      <div class="stats">
+        <div class="stat"><div class="num" data-count="9" data-suffix="+">0</div><div class="label">Capabilities shipping</div></div>
+        <div class="stat"><div class="num" data-count="2" data-suffix=" OS">0</div><div class="label">Platforms (Win · Mac)</div></div>
+        <div class="stat"><div class="num" data-count="1" data-suffix="">0</div><div class="label">Agent · classroom &amp; factory</div></div>
+        <div class="stat"><div class="num" data-count="100" data-suffix="%">0</div><div class="label">Real, working beta</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE HIGHLIGHTS -->
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>One agent. The classroom and the factory.</h2>
+        <p>Everything below is in the beta today — real, working, in your hands early.</p>
+      </div>
+      <div class="grid">
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M12 14c4 0 7-2 7-5s-3-5-7-5-7 2-7 5 3 5 7 5Z"/><path d="M5 9v5c0 3 3 5 7 5s7-2 7-5V9"/></svg></div>
+          <h3>Emrys AI tutor</h3>
+          <p>Teaches one small step at a time, checks understanding, and never just dumps the answer — the way a patient human teacher would.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M4 5h16v11H4z"/><path d="M2 20h20"/><path d="M9 9h6"/></svg></div>
+          <h3>Teach mode</h3>
+          <p>Delivers a full, ready-to-read lesson a teacher can speak to the class — even with no prior coding experience.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M14 3v5h5"/><path d="M14 3H6v18h12V8z"/><path d="M9 13h6M9 17h4"/></svg></div>
+          <h3>Files, images &amp; voice</h3>
+          <p>Send a PDF, a photo, code, or just speak — Emrys reads it and responds. The feature your launch is built around.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Chat, voice &amp; video</h3>
+          <p>Classes and teams communicate in-app with group chat and live voice/video calls.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+          <h3>Remote control</h3>
+          <p>A teacher or agent can guide a student's screen live — TeamViewer-style — always with permission.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg></div>
+          <h3>Roadmaps &amp; analytics</h3>
+          <p>Projects broken into day-by-day lessons, daily reports, and progress &amp; impact tracking across the class.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM / THESIS -->
+  <section style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="max-width:820px;">
+        <h2>The future shouldn't arrive faster than the people who live in it.</h2>
+        <p>
+          We tell young people to learn robotics and AI — but the teachers were never trained in it.
+          On the industrial side, the machines arrive long before the skills to run them.
+          Credent sends the teacher <em>first</em>. The same agent that teaches a child to code is
+          built to train an operator on the floor — step by step, checking they're ready before the stakes are real.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <div class="container reveal">
+      <h2>Ready to meet Emrys?</h2>
+      <p>Download the Credent desktop app and start teaching with the agent.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" data-magnetic href="download.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Download Credent
+        </a>
+        <a class="btn btn-ghost" data-magnetic href="support.html">Talk to us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/credent_logo.svg" alt="Credent" /><span>Credent</span></a>
+        <p>Robotics &amp; AI for industry and education. Featuring Emrys — the agentic software that teaches, remembers, and guides.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Product</h5>
+          <a href="features.html">Features</a>
+          <a href="download.html">Download</a>
+          <a href="download.html">Windows</a>
+          <a href="download.html">macOS</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="support.html">Support</a>
+          <a href="support.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      © <span data-year>2026</span> Credent Company Limited. All rights reserved. · Beta.
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/fx.js"></script>
+  <script type="module" src="js/scene.js"></script>
+</body>
+</html>

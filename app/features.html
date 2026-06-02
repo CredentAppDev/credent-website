@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features — Credent</title>
+  <meta name="description" content="What Emrys, the Credent agent, actually does today: AI tutoring, teach mode, files/images/voice, calls, remote control, analytics." />
+  <link rel="icon" href="assets/emrys-agent.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <canvas id="glow-canvas"></canvas>
+  <div class="bg-wash"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><img src="assets/credent_logo.svg" alt="Credent" /><span>Credent</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">← Main site</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html" class="active">Features</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="download.html" class="btn btn-primary" style="padding:9px 18px;">Get Credent</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- PAGE HERO -->
+  <section class="hero" style="padding:90px 0 50px;">
+    <div class="container">
+      <span class="eyebrow">Verified from the product</span>
+      <h1 style="font-size:clamp(2rem,5vw,3.4rem);">What <span class="gradient-text" data-decrypt="Emrys">Emrys</span> actually does today</h1>
+      <p class="lead">No over-promising. Every capability below is shipping in the beta — for the classroom and the training floor.</p>
+    </div>
+  </section>
+
+  <!-- FEATURE GRID -->
+  <section style="padding-top:20px;">
+    <div class="container">
+      <div class="grid">
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M12 14c4 0 7-2 7-5s-3-5-7-5-7 2-7 5 3 5 7 5Z"/><path d="M5 9v5c0 3 3 5 7 5s7-2 7-5V9"/></svg></div>
+          <h3>Emrys AI tutor</h3>
+          <p>A patient teacher that teaches one small step at a time, remembers the session, checks understanding, and never just dumps answers.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M4 5h16v11H4z"/><path d="M2 20h20"/><path d="M9 9h6"/></svg></div>
+          <h3>Teach mode</h3>
+          <p>Emrys delivers a full, ready-to-read lesson the teacher speaks to the class — even without prior coding experience.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg></div>
+          <h3>Roadmaps &amp; daily reports</h3>
+          <p>Projects broken into day-by-day lessons. Teachers log what the class finished and Emrys plans the next step.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M14 3v5h5"/><path d="M14 3H6v18h12V8z"/><path d="M9 13h6M9 17h4"/></svg></div>
+          <h3>Understands files, images &amp; voice</h3>
+          <p>Send a PDF, a photo, code, or speak — and Emrys reads it and responds. This is the capability your launch is built around.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Group chat + voice/video calls</h3>
+          <p>Classes and teams communicate in-app with group chat and live voice and video calls.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+          <h3>Remote control / screen share</h3>
+          <p>A teacher or agent can guide a student's screen live, TeamViewer-style — always with the student's permission.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Memory across sessions</h3>
+          <p>Emrys remembers what you were working on, lesson after lesson, so teaching picks up where it left off.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg></div>
+          <h3>Analytics</h3>
+          <p>Progress, impact, and class-performance tracking so you can see what's working.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/></svg></div>
+          <h3>Industrial training</h3>
+          <p>The same agent that teaches a child to code trains an operator on the floor — step by step, before the stakes are real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSITIONING -->
+  <section class="cta-band">
+    <div class="container reveal" style="max-width:780px;">
+      <h2>Not a chatbot bolted onto a school.</h2>
+      <p style="font-size:1.1rem;">
+        Credent is an agentic teaching system — software that teaches, remembers, and guides —
+        built to carry both the classroom and the industrial training floor.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" data-magnetic href="download.html">Download Credent</a>
+        <a class="btn btn-ghost" data-magnetic href="support.html">Ask a question</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/credent_logo.svg" alt="Credent" /><span>Credent</span></a>
+        <p>Robotics &amp; AI for industry and education. Featuring Emrys — the agentic software that teaches, remembers, and guides.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Product</h5>
+          <a href="features.html">Features</a>
+          <a href="download.html">Download</a>
+          <a href="download.html">Windows</a>
+          <a href="download.html">macOS</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="support.html">Support</a>
+          <a href="support.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">© <span data-year>2026</span> Credent Company Limited. All rights reserved. · Beta.</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/fx.js"></script>
+</body>
+</html>

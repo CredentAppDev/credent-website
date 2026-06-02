@@ -1,0 +1,12 @@
+.DS_Store
+assets/images/.DS_Store
+node_modules/
+.netlify/
+.vercel/
+_archive/
+credent-site-upload/
+credent-website-deploy.zip
+
+# macOS metadata
+._*
+.DS_Store

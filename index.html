@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#050507" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Credent" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<title>Credent — Africa's Future, Built in Code</title>
+<meta name="description" content="Credent Company Limited — Africa's number one hub for Artificial Intelligence and Robotics education. Building the next generation of African innovators." />
+<meta property="og:title" content="Credent — Africa's Future, Built in Code" />
+<meta property="og:description" content="Africa's number one hub for AI and Robotics education. Building the next generation of innovators." />
+<meta property="og:type" content="website" />
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+<link rel="apple-touch-icon" href="assets/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=9" />
+</head>
+<body>
+
+<!-- ============== PRELOADER ============== -->
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <svg class="preloader-logo" viewBox="0 0 367 264" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.9">
+        <path d="M181.825 41.1158C279.099 27.1377 299.334 46.3597 313.697 99.031C329.172 155.78 271.069 205.519 271.069 205.519C420.157 157.289 396.447 -27.7336 180.223 4.05489" fill="#00FFFF"/>
+        <path d="M181.54 39.5489L226.702 38.4318L228.154 39.2162C240.467 177.271 183.541 189.178 183.541 189.178L181.54 39.5957Z" fill="#FF00FF"/>
+        <path d="M270.64 244.263C374.422 231.282 365.895 106.045 365.895 106.045C365.895 106.045 361.248 204.283 228.555 210.397" fill="#FF00FF"/>
+        <path d="M159.45 2.53469L159.334 36.5376C159.334 36.5376 36.0662 5.59533 60.5139 142.691C73.6365 216.279 176.51 251.274 229.114 134.505C229.114 134.505 200.03 293.315 82.1752 257.057C-18.4778 226.091 -57.916 -19.5885 159.45 2.53469Z" fill="#FF00FF" stroke="#010805" stroke-width="2.2563"/>
+      </g>
+    </svg>
+    <div class="preloader-bar"><span></span></div>
+    <div class="preloader-text">CREDENT // INITIALIZING</div>
+  </div>
+</div>
+
+<!-- ============== CUSTOM CURSOR ============== -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- ============== NAV ============== -->
+<header class="nav" id="nav">
+  <a href="#hero" class="nav-logo" data-cursor="hover">
+    <img src="assets/logo.svg" alt="Credent" />
+    <span>CREDENT</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#about" data-cursor="hover">About</a>
+    <a href="#vision" data-cursor="hover">Vision</a>
+    <a href="#services" data-cursor="hover">Services</a>
+    <a href="#founders" data-cursor="hover">Founders</a>
+    <a href="#testimonials" data-cursor="hover">Voices</a>
+    <a href="#download" data-cursor="hover">Download App</a>
+    <a href="#contact" data-cursor="hover">Contact</a>
+  </nav>
+  <a href="#demo" class="nav-cta" data-cursor="hover">
+    <span>Request Demo</span>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu"><span></span><span></span></button>
+</header>
+
+<!-- ============== HERO ============== -->
+<section class="hero" id="hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="assets/videos/starting.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <canvas class="hero-earth" id="heroEarth"></canvas>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      <span>AFRICA · AI · ROBOTICS · EDUCATION</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="hero-line"><span class="hero-word">The</span> <span class="hero-word">future</span> <span class="hero-word">is</span></span>
+      <span class="hero-line"><span class="hero-word gradient">built</span> <span class="hero-word gradient">in</span> <span class="hero-word gradient">code.</span></span>
+    </h1>
+    <div class="hero-vapor">
+      <canvas id="vaporCanvas"></canvas>
+    </div>
+    <p class="hero-sub">
+      Credent represents the hub of Africa's sophisticated sciences, technology and innovations through modernised pragmatic educational mechanisms and systems.
+    </p>
+    <div class="hero-cta">
+      <a href="#demo" class="btn btn-primary" data-cursor="hover">
+        <span>Request a School Demo</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#instructor" class="btn btn-ghost" data-cursor="hover">
+        <span>Become an Instructor</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" data-count="100">0</span><span class="stat-suf">%</span><span class="stat-lbl">Certified Instructors</span></div>
+      <div class="stat"><span class="stat-num" data-count="6">0</span><span class="stat-suf">yr</span><span class="stat-lbl">Class 4 → JHS 3 Journey</span></div>
+      <div class="stat"><span class="stat-num" data-count="1">0</span><span class="stat-suf">QR</span><span class="stat-lbl">Verifiable Certificate</span></div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL TO EXPLORE</span>
+  </div>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>· INNOVATION</span><span>· ROBOTICS</span><span>· AI</span><span>· FUTURE</span><span>· AFRICA</span>
+      <span>· INNOVATION</span><span>· ROBOTICS</span><span>· AI</span><span>· FUTURE</span><span>· AFRICA</span>
+      <span>· INNOVATION</span><span>· ROBOTICS</span><span>· AI</span><span>· FUTURE</span><span>· AFRICA</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ABOUT ============== -->
+<section class="about" id="about">
+  <div class="section-tag"><span>01</span><span>ABOUT CREDENT</span></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 class="reveal-text">A hub built for <em>Africa's</em> next generation of innovators.</h2>
+      <p class="reveal-text">
+        Credent Company Limited was created to be Africa's number one answer in the field of
+        Artificial Intelligence and Robotics. It represents a hub for Africa's advanced science,
+        technology, and innovation — driven through modernized and practical educational systems.
+      </p>
+      <p class="reveal-text">
+        Currently, it offers one of its flagship programs known as the <strong>Credent Robotics
+        Education Division</strong>.
+      </p>
+      <div class="about-bullets">
+        <div class="about-bullet" data-cursor="hover">
+          <div class="bullet-num">01</div>
+          <div><h4>Practical AI Education</h4><p>Hands-on labs, real robots, real code.</p></div>
+        </div>
+        <div class="about-bullet" data-cursor="hover">
+          <div class="bullet-num">02</div>
+          <div><h4>Pan-African Vision</h4><p>Built in Ghana for the entire continent.</p></div>
+        </div>
+        <div class="about-bullet" data-cursor="hover">
+          <div class="bullet-num">03</div>
+          <div><h4>Verifiable Excellence</h4><p>QR-secured certificates that travel anywhere.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="visual-frame">
+        <video autoplay muted loop playsinline>
+          <source src="assets/videos/teaching.mp4" type="video/mp4" />
+        </video>
+        <div class="visual-frame-glow"></div>
+      </div>
+      <div class="visual-tag">
+        <span>Credent Robotics Education Division</span>
+        <div class="pulse"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== VISION & MISSION ============== -->
+<section class="vision" id="vision">
+  <video class="vision-bg" autoplay muted loop playsinline>
+    <source src="assets/videos/house-learning.mp4" type="video/mp4" />
+  </video>
+  <div class="vision-overlay"></div>
+
+  <div class="section-tag light"><span>02</span><span>VISION &amp; MISSION</span></div>
+
+  <div class="vision-grid">
+    <article class="vision-card" data-cursor="hover">
+      <div class="vision-card-num">VISION</div>
+      <h3>To empower Africa's educational and industrial sectors through innovations and technological mechanisms and systems of operation in this 21st century.</h3>
+      <div class="vision-card-bar"></div>
+    </article>
+    <article class="vision-card" data-cursor="hover">
+      <div class="vision-card-num">MISSION</div>
+      <h3>Credent represents the hub of Africa's sophisticated sciences, technology, and innovations through modernized pragmatic education and industrial systems.</h3>
+      <div class="vision-card-bar"></div>
+    </article>
+  </div>
+</section>
+
+<!-- ============== SERVICES ============== -->
+<section class="services" id="services">
+  <div class="section-tag"><span>03</span><span>WHAT WE OFFER</span></div>
+  <h2 class="services-title">
+    <span class="reveal-text">Built for schools.</span>
+    <span class="reveal-text">Designed for the <em>future</em>.</span>
+  </h2>
+
+  <div class="services-grid">
+    <article class="service-card" data-cursor="hover">
+      <div class="service-img"><img src="assets/images/cfo.jpeg" alt="Investment & Legacy" loading="lazy" decoding="async" /></div>
+      <div class="service-body">
+        <span class="service-num">01</span>
+        <h3>Investment in Legacy</h3>
+        <p>"The school that invests in this program today is not just adding a subject to its timetable. It is building a legacy. And legacies are what define an institution's reputation for generations."</p>
+        <span class="service-attr">— Mr. Emmanuel Osei Aborah, Executive Director</span>
+      </div>
+    </article>
+
+    <article class="service-card" data-cursor="hover">
+      <div class="service-img"><img src="assets/images/cxo.jpeg" alt="Child Empowerment" loading="lazy" decoding="async" /></div>
+      <div class="service-body">
+        <span class="service-num">02</span>
+        <h3>Empowering the Builder</h3>
+        <p>"Credent Robotics Education Division does not just teach children about machines — it teaches them that they are capable of building things that matter. And a child who genuinely believes that will change the world."</p>
+        <span class="service-attr">— Mr. Adjei Mensah, Chief of Financial & Logistics</span>
+      </div>
+    </article>
+
+    <article class="service-card" data-cursor="hover">
+      <div class="service-img"><img src="assets/images/instructor.jpeg" alt="Qualified Instructors" loading="lazy" decoding="async" /></div>
+      <div class="service-body">
+        <span class="service-num">03</span>
+        <h3>Qualified Instructors</h3>
+        <p>Every class session is delivered by a certified instructor. All of our instructors hold a university degree or higher qualification — trained, vetted, and continuously upskilled.</p>
+        <span class="service-attr">— 100% certified faculty</span>
+      </div>
+    </article>
+
+    <article class="service-card service-card-feature" data-cursor="hover">
+      <div class="service-img"><img src="assets/images/certificate.jpeg" alt="Credent Certificate" loading="lazy" decoding="async" /></div>
+      <div class="service-body">
+        <span class="service-num">04</span>
+        <h3>The Credent Certificate</h3>
+        <p>When a student completes the full journey — from Class 4 all the way through JHS 3 — they receive a Credent Robotics &amp; Coding Certificate. Every certificate carries a unique QR code. Any school, university, employer, or scholarship committee can scan it and instantly verify authenticity.</p>
+        <div class="qr-mock">
+          <div class="qr-pattern"></div>
+          <span>SCAN TO VERIFY</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============== FOUNDERS ============== -->
+<section class="founders" id="founders">
+  <div class="section-tag"><span>04</span><span>LEADERSHIP</span></div>
+  <h2 class="founders-title"><span class="reveal-text">The minds behind Credent.</span></h2>
+
+  <div class="founders-grid">
+    <article class="founder-card" data-cursor="hover">
+      <div class="founder-img"><img src="assets/images/cfo.jpeg" alt="Emmanuel Osei Aborah" loading="lazy" decoding="async" /></div>
+      <div class="founder-info">
+        <span class="founder-role">Executive Director</span>
+        <h3>Mr. Emmanuel Osei Aborah</h3>
+        <p>"The school that invests in this program today is not just adding a subject to its timetable — it is building a legacy."</p>
+      </div>
+    </article>
+
+    <article class="founder-card" data-cursor="hover">
+      <div class="founder-img"><img src="assets/images/cxo.jpeg" alt="Adjei Mensah" loading="lazy" decoding="async" /></div>
+      <div class="founder-info">
+        <span class="founder-role">Executive Chief Of Financial & Logistics</span>
+        <h3>Mr. Adjei Mensah</h3>
+        <p>"We don't just teach children about machines. We teach them they are capable of building things that matter."</p>
+      </div>
+    </article>
+
+    <article class="founder-card" data-cursor="hover">
+      <div class="founder-img"><img src="assets/images/founder.jpeg" alt="Founder of Credent" loading="lazy" decoding="async" /></div>
+      <div class="founder-info">
+        <span class="founder-role">Founder &amp; CEO</span>
+        <h3>The Founder of Credent</h3>
+        <p>"Africa will not wait for the future to arrive — we are building it, one student, one robot, one line of code at a time."</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============== TESTIMONIALS ============== -->
+<section class="testimonials" id="testimonials">
+  <div class="section-tag light"><span>05</span><span>VOICES OF THE FUTURE</span></div>
+  <h2 class="testimonials-title">
+    <span class="reveal-text">The world's leaders agree:</span>
+    <span class="reveal-text gradient">the AI generation starts now.</span>
+  </h2>
+
+  <div class="testimonials-stage">
+    <div class="testimonials-images" id="testiImages"></div>
+    <div class="testimonials-text">
+      <div class="testi-quote-mark">"</div>
+      <p class="testi-quote" id="testiQuote"></p>
+      <div class="testi-meta">
+        <h4 id="testiName"></h4>
+        <span id="testiRole"></span>
+      </div>
+      <div class="testi-controls">
+        <button class="testi-btn" id="testiPrev" data-cursor="hover" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5m7 7-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="testi-progress"><span id="testiProgressBar"></span></span>
+        <button class="testi-btn" id="testiNext" data-cursor="hover" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROGRAMS GALLERY ============== -->
+<section class="gallery" id="gallery">
+  <div class="section-tag"><span>06</span><span>LEARNING IN ACTION</span></div>
+  <h2 class="gallery-title"><span class="reveal-text">Where the next innovators are made.</span></h2>
+
+  <div class="gallery-stage" id="galleryStage">
+    <!-- cards generated by JS -->
+  </div>
+  <p class="gallery-hint">Drag · Hover · Explore</p>
+</section>
+
+<!-- ============== DOWNLOAD THE APP ============== -->
+<section class="download" id="download">
+  <canvas class="download-bg" id="downloadCanvas"></canvas>
+  <div class="download-inner">
+    <div class="section-tag"><span>07</span><span>THE CREDENT APP · EMRYS AI</span></div>
+    <h2 class="download-title">
+      <span class="reveal-text">Meet <em>Emrys</em> — the agent</span>
+      <span class="reveal-text">that <span class="grad-text">teaches</span>.</span>
+    </h2>
+    <p class="download-lead reveal-text">
+      The Credent desktop app puts an agentic AI tutor on every machine — it teaches one
+      step at a time, reads files, images and voice, runs live calls, and guides a student's
+      screen with permission. Built for the classroom and the training floor.
+    </p>
+
+    <div class="download-cards">
+      <!-- Windows -->
+      <article class="dl-card" data-tilt data-cursor="hover">
+        <div class="dl-card-glow"></div>
+        <div class="dl-os">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.5 4.4v7.1H3zM10.5 12.5v7.1L3 18.5v-6zM11.5 4.25 21 3v8.5h-9.5zM21 12.5V21l-9.5-1.25V12.5z"/></svg>
+        </div>
+        <h3>Windows</h3>
+        <p class="dl-meta">Windows 10 / 11 · 64-bit · ~72 MB</p>
+        <a class="btn btn-primary btn-full" href="https://github.com/CredentAppDev/credent-website/releases/download/v1.1.0/Credent-1.1.0-Setup.exe" data-cursor="hover">
+          <span>Download for Windows</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="dl-note">.exe · portable installer · v1.1.0 beta</span>
+      </article>
+
+      <!-- macOS -->
+      <article class="dl-card dl-card-soon" data-tilt data-cursor="hover">
+        <span class="dl-badge">Coming soon</span>
+        <div class="dl-card-glow"></div>
+        <div class="dl-os">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 3c.1 1.2-.4 2.3-1.1 3.1-.8.9-2 1.5-3.1 1.4-.1-1.2.4-2.4 1.1-3.1.8-.9 2.1-1.4 3.1-1.4zM19.8 17c-.5 1.2-1.1 2.3-1.9 3.3-.7.9-1.5 1.9-2.6 1.9-1 0-1.4-.6-2.6-.6-1.2 0-1.6.6-2.6.6-1.1 0-1.9-1-2.6-2-1.6-2.1-2.8-6-1.2-8.6.8-1.3 2.1-2.1 3.6-2.1 1 0 2 .7 2.6.7.6 0 1.8-.8 3.1-.7.5 0 2.1.2 3.1 1.6-2.8 1.6-2.4 5.5.7 6.9z"/></svg>
+        </div>
+        <h3>macOS</h3>
+        <p class="dl-meta">Apple Silicon &amp; Intel · .dmg</p>
+        <span class="btn btn-ghost btn-full dl-disabled" aria-disabled="true">
+          <span>Coming soon</span>
+        </span>
+        <span class="dl-note">Want it first? <a href="#contact" data-cursor="hover">Tell us below</a></span>
+      </article>
+    </div>
+
+    <!-- ACCESS / PASSKEY REQUEST -->
+    <div class="access-wrap" id="get-access">
+      <form class="access-card" data-cursor="hover" onsubmit="handleSubmit(event,'passkey')" novalidate>
+        <div class="access-head">
+          <span class="access-key" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M15 7a4 4 0 1 1-3.9 5H7v3H4v-3H2.5l1.2-1.2A4 4 0 0 1 9 7m6 1.5h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>Get your access passkey</h3>
+          <p>Installed the app? Request your one-time login passkey. Enter your details and our team will send it to you — on WhatsApp or by email, your choice.</p>
+        </div>
+
+        <div class="field"><input type="text" id="pk-name" required autocomplete="name" /><label>Full Name</label><span class="field-line"></span></div>
+        <div class="field-row">
+          <div class="field"><input type="tel" id="pk-whatsapp" required autocomplete="tel" inputmode="tel" placeholder=" " /><label>WhatsApp Number (with country code)</label><span class="field-line"></span></div>
+          <div class="field"><input type="email" id="pk-email" required autocomplete="email" /><label>Email</label><span class="field-line"></span></div>
+        </div>
+
+        <div class="access-channel">
+          <span class="access-channel-label">Send my passkey to my</span>
+          <div class="channel-options">
+            <label class="channel-opt" data-cursor="hover">
+              <input type="radio" name="pk-channel" value="whatsapp" checked />
+              <span class="channel-chip">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2m5.8 14.13c-.24.68-1.4 1.3-1.95 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-2.99s.75-2.12 1.01-2.41c.27-.29.58-.36.78-.36l.56.01c.18.01.42-.07.66.5.24.59.83 2.03.9 2.18.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.37-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.27.14.43.12.59-.07.16-.19.68-.79.86-1.07.18-.27.36-.22.61-.13.25.09 1.6.75 1.87.89.27.14.46.21.53.32.07.12.07.66-.17 1.34"/></svg>
+                WhatsApp
+              </span>
+            </label>
+            <label class="channel-opt" data-cursor="hover">
+              <input type="radio" name="pk-channel" value="email" />
+              <span class="channel-chip">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Email
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" data-cursor="hover">
+          <span>Request my passkey</span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="access-or"><span>or message us directly</span></div>
+        <!-- FREE click-to-chat → Credent WhatsApp (+233 25 763 3623). -->
+        <a class="access-wa" href="https://wa.me/233257633623?text=Hi%20Credent%2C%20I%27ve%20installed%20the%20app%20and%20would%20like%20my%20login%20passkey." target="_blank" rel="noopener" data-cursor="hover">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2m5.8 14.13c-.24.68-1.4 1.3-1.95 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-2.99s.75-2.12 1.01-2.41c.27-.29.58-.36.78-.36l.56.01c.18.01.42-.07.66.5.24.59.83 2.03.9 2.18.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.16-.29.37-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.27.14.43.12.59-.07.16-.19.68-.79.86-1.07.18-.27.36-.22.61-.13.25.09 1.6.75 1.87.89.27.14.46.21.53.32.07.12.07.66-.17 1.34"/></svg>
+          <span>Chat with us on WhatsApp</span>
+        </a>
+
+        <p class="access-fine">One-time use · we never share your details. By requesting access you agree to be contacted about your Credent account.</p>
+      </form>
+    </div>
+
+    <p class="download-more reveal-text">
+      Want the full feature tour and install guide?
+      <a href="app/index.html" data-cursor="hover">Open the app site →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ============== CONTACT / FORMS ============== -->
+<section class="contact" id="contact">
+  <div class="section-tag"><span>08</span><span>JOIN THE FUTURE</span></div>
+
+  <div class="contact-grid">
+    <!-- School Demo -->
+    <form class="contact-card" id="demo" data-cursor="hover" onsubmit="handleSubmit(event,'demo')">
+      <h3>Request a school demo</h3>
+      <p>Bring Credent to your school. Tell us about you — we'll come build the future with your students.</p>
+
+      <div class="field">
+        <input type="text" id="demo-school" required />
+        <label>School Name</label>
+        <span class="field-line"></span>
+      </div>
+      <div class="field-row">
+        <div class="field"><input type="text" id="demo-name" required /><label>Your Name</label><span class="field-line"></span></div>
+        <div class="field"><input type="text" id="demo-role" required /><label>Your Role</label><span class="field-line"></span></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><input type="email" id="demo-email" required /><label>Email</label><span class="field-line"></span></div>
+        <div class="field"><input type="tel" id="demo-phone" required /><label>Phone</label><span class="field-line"></span></div>
+      </div>
+      <div class="field"><input type="text" id="demo-location" required /><label>School Location</label><span class="field-line"></span></div>
+      <div class="field"><textarea id="demo-message" rows="3"></textarea><label>Tell us about your school</label><span class="field-line"></span></div>
+
+      <button type="submit" class="btn btn-primary btn-full">
+        <span>Submit Request</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+
+    <!-- Teacher Employment -->
+    <form class="contact-card" id="instructor" data-cursor="hover" onsubmit="handleSubmit(event,'instructor')">
+      <h3>Become an instructor</h3>
+      <p>Join our certified faculty. Submit your CV, application letter, and degree to be considered.</p>
+
+      <div class="field-row">
+        <div class="field"><input type="text" id="ins-name" required /><label>Full Name</label><span class="field-line"></span></div>
+        <div class="field"><input type="email" id="ins-email" required /><label>Email</label><span class="field-line"></span></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><input type="tel" id="ins-phone" required /><label>Phone</label><span class="field-line"></span></div>
+        <div class="field"><input type="text" id="ins-subject" required /><label>Specialty (e.g. Robotics, AI, Coding)</label><span class="field-line"></span></div>
+      </div>
+
+      <div class="upload"><label class="upload-box" for="ins-cv">
+        <span class="upload-icon">↑</span><span class="upload-text"><strong>Upload CV</strong><em>PDF / DOCX</em></span>
+        <input type="file" id="ins-cv" accept=".pdf,.doc,.docx" hidden /></label></div>
+      <div class="upload"><label class="upload-box" for="ins-letter">
+        <span class="upload-icon">↑</span><span class="upload-text"><strong>Application Letter</strong><em>PDF / DOCX</em></span>
+        <input type="file" id="ins-letter" accept=".pdf,.doc,.docx" hidden /></label></div>
+      <div class="upload"><label class="upload-box" for="ins-degree">
+        <span class="upload-icon">↑</span><span class="upload-text"><strong>Degree Certificate</strong><em>PDF / Image</em></span>
+        <input type="file" id="ins-degree" accept=".pdf,image/*" hidden /></label></div>
+
+      <button type="submit" class="btn btn-primary btn-full">
+        <span>Apply Now</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="assets/logo.svg" alt="Credent" />
+      <h2 class="footer-mark"><span>CREDENT</span></h2>
+      <p>Africa's number one hub for Artificial Intelligence and Robotics. Built in Ghana, designed for the world.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="#about" data-cursor="hover">About</a>
+        <a href="#vision" data-cursor="hover">Vision &amp; Mission</a>
+        <a href="#services" data-cursor="hover">Services</a>
+        <a href="#founders" data-cursor="hover">Leadership</a>
+      </div>
+      <div class="footer-col">
+        <h5>Engage</h5>
+        <a href="#demo" data-cursor="hover">School Demo</a>
+        <a href="#instructor" data-cursor="hover">Become Instructor</a>
+        <a href="#download" data-cursor="hover">Download the App</a>
+        <a href="#testimonials" data-cursor="hover">Voices</a>
+        <a href="#gallery" data-cursor="hover">Gallery</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="mailto:credent.gh.com" data-cursor="hover">credent.gh.com</a>
+        <a href="tel:+233240870067" data-cursor="hover">+233 240 870 067</a>
+        <a href="tel:+233257633623" data-cursor="hover">+233 257 633 623</a>
+        <a href="https://credent.gh.com" data-cursor="hover">credent.gh.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-mega">
+    <span>CREDENT</span>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> Credent Company Limited. All rights reserved.</span>
+    <span>Made in Ghana 🇬🇭 · Built for Africa</span>
+  </div>
+</footer>
+
+<!-- ============== TOAST ============== -->
+<div class="toast" id="toast"><span></span></div>
+
+<!-- ============== LIBS ============== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="app.js?v=9"></script>
+</body>
+</html>

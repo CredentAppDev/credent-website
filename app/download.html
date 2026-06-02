@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download — Credent</title>
+  <meta name="description" content="Download the Credent desktop app for Windows and macOS." />
+  <link rel="icon" href="assets/emrys-agent.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <canvas id="glow-canvas"></canvas>
+  <div class="bg-wash"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><img src="assets/credent_logo.svg" alt="Credent" /><span>Credent</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">← Main site</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="download.html" class="active">Download</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="download.html" class="btn btn-primary" style="padding:9px 18px;">Get Credent</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" style="padding:90px 0 40px;">
+    <div class="container">
+      <span class="eyebrow">Version 1.1.0 · Beta</span>
+      <h1 style="font-size:clamp(2rem,5vw,3.4rem);">Download <span class="gradient-text" data-decrypt="Credent">Credent</span></h1>
+      <p class="lead">Get the desktop app and start teaching with Emrys. Free during the beta.</p>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD CARDS -->
+  <section style="padding-top:10px;">
+    <div class="container">
+      <div class="dl-grid">
+
+        <!-- WINDOWS -->
+        <div class="dl-card reveal" data-tilt>
+          <svg class="platform-ico" viewBox="0 0 24 24"><path d="M3 5.5 10.5 4.4v7.1H3zM10.5 12.5v7.1L3 18.5v-6zM11.5 4.25 21 3v8.5h-9.5zM21 12.5V21l-9.5-1.25V12.5z"/></svg>
+          <h3>Windows</h3>
+          <p class="meta">Windows 10 / 11 · 64-bit · ~72 MB</p>
+          <a class="btn btn-primary" href="https://github.com/CredentAppDev/credent-website/releases/download/v1.1.0/Credent-1.1.0-Setup.exe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download for Windows
+          </a>
+          <p class="meta" style="margin:14px 0 0;font-size:.8rem;">.exe · portable installer</p>
+        </div>
+
+        <!-- MAC (coming soon) -->
+        <div class="dl-card reveal" data-tilt>
+          <span class="badge-soon">Coming soon</span>
+          <svg class="platform-ico" viewBox="0 0 24 24"><path d="M16.5 3c.1 1.2-.4 2.3-1.1 3.1-.8.9-2 1.5-3.1 1.4-.1-1.2.4-2.4 1.1-3.1.8-.9 2.1-1.4 3.1-1.4zM19.8 17c-.5 1.2-1.1 2.3-1.9 3.3-.7.9-1.5 1.9-2.6 1.9-1 0-1.4-.6-2.6-.6-1.2 0-1.6.6-2.6.6-1.1 0-1.9-1-2.6-2-1.6-2.1-2.8-6-1.2-8.6.8-1.3 2.1-2.1 3.6-2.1 1 0 2 .7 2.6.7.6 0 1.8-.8 3.1-.7.5 0 2.1.2 3.1 1.6-2.8 1.6-2.4 5.5.7 6.9z"/></svg>
+          <h3>macOS</h3>
+          <p class="meta">Apple Silicon &amp; Intel · .dmg</p>
+          <a class="btn btn-disabled" aria-disabled="true" title="The macOS build is on the way">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span>Coming soon</span>
+          </a>
+          <p class="meta" style="margin:14px 0 0;font-size:.8rem;">Want it first? <a href="support.html#contact" style="color:var(--cyan);">Tell us</a></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL STEPS -->
+  <section style="padding-top:30px;">
+    <div class="container">
+      <div class="section-head reveal"><h2>Installing on Windows</h2><p>Up and running in under a minute.</p></div>
+      <div class="steps">
+        <div class="step reveal"><div class="num">1</div><div><h4>Download the file</h4><p>Click <strong>Download for Windows</strong> above to get <code>Credent-1.1.0-Setup.exe</code>.</p></div></div>
+        <div class="step reveal"><div class="num">2</div><div><h4>Run it</h4><p>Double-click the downloaded file. It's a portable build — no admin install needed.</p></div></div>
+        <div class="step reveal"><div class="num">3</div><div><h4>If SmartScreen appears</h4><p>Because this is a fresh beta, Windows may show "Windows protected your PC." Click <strong>More info → Run anyway</strong>. Code signing is coming.</p></div></div>
+        <div class="step reveal"><div class="num">4</div><div><h4>Meet Emrys</h4><p>The app opens to the Emrys glow. Sign in and start your first lesson.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding-top:20px;">
+    <div class="container">
+      <div class="section-head reveal"><h2>Download questions</h2></div>
+      <div class="faq">
+        <div class="faq-item reveal">
+          <button class="faq-q">Is Credent free?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">Yes — Credent is free to use during the beta. We're inviting you in early to help shape it.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">When is the Mac version coming?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">The macOS build (Apple Silicon &amp; Intel) is in progress and will appear here as soon as it's signed and notarized. Drop us a note on the support page to be told the moment it's live.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">What are the system requirements?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">Windows 10 or 11 (64-bit), about 200 MB free disk space, and an internet connection. A microphone and camera are needed for voice/video calls and screen-share narration.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Why does Windows warn about the file?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">It's a brand-new beta that isn't code-signed yet, so SmartScreen flags it as unrecognized. Choose <strong>More info → Run anyway</strong>. Signing is on the roadmap.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/credent_logo.svg" alt="Credent" /><span>Credent</span></a>
+        <p>Robotics &amp; AI for industry and education. Featuring Emrys — the agentic software that teaches, remembers, and guides.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Product</h5>
+          <a href="features.html">Features</a>
+          <a href="download.html">Download</a>
+          <a href="download.html">Windows</a>
+          <a href="download.html">macOS</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="support.html">Support</a>
+          <a href="support.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">© <span data-year>2026</span> Credent Company Limited. All rights reserved. · Beta.</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/fx.js"></script>
+</body>
+</html>

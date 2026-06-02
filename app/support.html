@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Credent</title>
+  <meta name="description" content="Get help with Credent, request the macOS build, or contact the team." />
+  <link rel="icon" href="assets/emrys-agent.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <canvas id="glow-canvas"></canvas>
+  <div class="bg-wash"></div>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><img src="assets/credent_logo.svg" alt="Credent" /><span>Credent</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">← Main site</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="support.html" class="active">Support</a></li>
+          <li><a href="download.html" class="btn btn-primary" style="padding:9px 18px;">Get Credent</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:90px 0 40px;">
+    <div class="container">
+      <span class="eyebrow">We're here to help</span>
+      <h1 style="font-size:clamp(2rem,5vw,3.4rem);">Support &amp; <span class="gradient-text" data-decrypt="contact">contact</span></h1>
+      <p class="lead">Questions, bug reports, or want the macOS build the moment it's ready? Reach out — this is a beta, and your feedback shapes it.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="padding-top:10px;">
+    <div class="container">
+      <div class="grid" style="max-width:820px;margin:0 auto;">
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+          <h3>Email us</h3>
+          <p>For help, partnership, or to be first on the macOS build.</p>
+          <p style="margin-top:12px;"><a href="mailto:ernacheampong334@gmail.com?subject=Credent%20support" style="color:var(--cyan);font-weight:600;">ernacheampong334@gmail.com</a></p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/></svg></div>
+          <h3>Credent Company Limited</h3>
+          <p>Robotics &amp; AI for the industrial and educational sectors. Founded by Ernest Owoahene Acheampong.</p>
+        </div>
+        <div class="card reveal" data-tilt>
+          <div class="ico"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7"/><path d="M12 17h.01"/></svg></div>
+          <h3>Report a bug</h3>
+          <p>Found something off in the beta? Email us with steps to reproduce and your OS — it genuinely helps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding-top:30px;">
+    <div class="container">
+      <div class="section-head reveal"><h2>Frequently asked</h2></div>
+      <div class="faq">
+        <div class="faq-item reveal">
+          <button class="faq-q">What is Emrys?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">Emrys is the agentic AI at the heart of Credent — a patient teacher that explains one step at a time, remembers your session, reads files/images/voice, and guides both students and operators.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Which platforms are supported?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">Windows is available now. macOS (Apple Silicon &amp; Intel) is coming soon, and a Linux build is on the roadmap.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Do I need a camera and microphone?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">Only for voice/video calls and screen-share narration. The AI tutor, teach mode, and reading files work without them.</div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Is my data private during remote control?<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="faq-a"><div class="faq-a-inner">Remote control and screen share only ever happen with the student's explicit permission — a teacher or agent can't take over a screen without it being granted.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container reveal">
+      <h2>Ready to start?</h2>
+      <p>Download Credent and meet the agent that teaches.</p>
+      <a class="btn btn-primary" data-magnetic href="download.html">Download Credent</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/credent_logo.svg" alt="Credent" /><span>Credent</span></a>
+        <p>Robotics &amp; AI for industry and education. Featuring Emrys — the agentic software that teaches, remembers, and guides.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Product</h5>
+          <a href="features.html">Features</a>
+          <a href="download.html">Download</a>
+          <a href="download.html">Windows</a>
+          <a href="download.html">macOS</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="support.html">Support</a>
+          <a href="mailto:ernacheampong334@gmail.com">Email</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">© <span data-year>2026</span> Credent Company Limited. All rights reserved. · Beta.</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/fx.js"></script>
+</body>
+</html>

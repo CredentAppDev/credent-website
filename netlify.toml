@@ -1,0 +1,32 @@
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/assets/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/logo.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Desktop app installers — cache for a year, force download
+[[headers]]
+  for = "/app/downloads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Disposition = "attachment"
+
+# Pretty URL: /app -> the download app's home
+[[redirects]]
+  from = "/app"
+  to = "/app/index.html"
+  status = 200
+
