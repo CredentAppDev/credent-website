@@ -270,9 +270,9 @@ async function run(){
   // a real example exchange, narrated stage by stage
   for(let i=0;i<STAGES.length;i++){
     lightStage(i);
-    if(i===0){ bubble('me','“Hey Emrys, why does my LED stay off?”'); }
-    if(i===3){ bubble('them','Let’s check one thing at a time. Is the switch on? 💡'); }
-    if(i===5){ bubble('them','I’ll blink it now so you can see it. <b>*click*</b>'); }
+    if(i===0){ bubble('me','“Hey Emrys, turn left.”'); }
+    if(i===3){ bubble('them','Turning the robot left now. 🤖'); }
+    if(i===5){ bubble('them','Done — left motor ran. <b>*whirr*</b> Want to go forward next?'); }
     await sleep(i===3?2600:1900);
   }
   stepNodes.forEach(n=>{n.classList.remove('on');n.classList.add('done');});
