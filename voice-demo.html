@@ -83,6 +83,11 @@
   @keyframes rise{to{opacity:1;transform:none}}
   .b.them{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:4px}
   .b.me{align-self:flex-end;color:#04111a;background:linear-gradient(120deg,var(--cyan),#6fd0ff);border-bottom-right-radius:4px;font-weight:500}
+  .fw-dl{display:flex;align-items:center;gap:9px;margin:10px 14px 0;padding:11px 13px;border-radius:13px;text-decoration:none;
+    color:#bfe9ff;border:1px solid rgba(120,200,255,.28);background:rgba(8,12,22,.55);transition:.2s;font-size:12.5px;font-weight:600}
+  .fw-dl:hover{border-color:rgba(51,235,255,.6);background:rgba(51,235,255,.08);color:#eef1fb}
+  .fw-dl svg{flex:none;stroke:var(--cyan)}
+  .fw-dl em{font-style:normal;color:var(--dim);font-weight:400;font-size:11px}
 
   .caption{position:absolute;left:calc(var(--rail) + ((100vw - var(--rail))/2));bottom:34px;transform:translateX(-50%);z-index:5;text-align:center;width:min(60%,560px);opacity:0;transition:opacity .4s}
   .caption .step{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
@@ -121,6 +126,10 @@
     </div>
     <div class="steps" id="steps"></div>
     <div class="chat" id="chat"></div>
+    <a class="fw-dl" href="downloads/credent-mino-firmware.zip" download>
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      <span>Get the Mino firmware <em>(source · ESP32‑S3)</em></span>
+    </a>
   </aside>
 
   <div class="caption" id="caption"><div class="step" id="capstep"></div><div class="txt" id="captxt"></div></div>
