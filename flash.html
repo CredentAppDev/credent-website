@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#05060c" />
+<title>Flash your Mino — Credent</title>
+<meta name="description" content="Flash the Credent Mino firmware onto an ESP32-S3 straight from your browser — no software to install. Plug in over USB and click Flash." />
+<link rel="canonical" href="https://credentgh.com/flash.html" />
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<!-- ESP Web Tools: browser-based ESP32 flashing over WebSerial (Chrome/Edge). -->
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+<style>
+  :root{ --cyan:#33EBFF; --blue:#0087D1; --indigo:#6C5CE7; --magenta:#FF00FF;
+    --bg:#05060c; --text:#eef1fb; --dim:#9aa3c0; --stroke:rgba(255,255,255,.12);
+    --grad:linear-gradient(120deg,var(--cyan),var(--blue) 35%,var(--indigo) 65%,var(--magenta)); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{background:
+      radial-gradient(55% 50% at 70% -8%,rgba(108,92,231,.20),transparent 70%),
+      radial-gradient(45% 45% at 8% 10%,rgba(51,235,255,.12),transparent 70%),
+      linear-gradient(180deg,#070815,#04050b 70%);
+    color:var(--text);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 20px 60px;}
+  .brandbar{display:flex;align-items:center;gap:12px;margin-bottom:30px}
+  .brandbar img{width:34px;height:auto;filter:drop-shadow(0 4px 16px rgba(108,92,231,.55))}
+  .brandbar .wm{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.16em;font-size:15px}
+  .brandbar .wm span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  .card{width:min(560px,100%);background:linear-gradient(165deg,rgba(20,24,42,.72),rgba(9,11,22,.62));
+    border:1px solid var(--stroke);border-radius:24px;padding:34px 30px 30px;
+    backdrop-filter:blur(22px) saturate(140%);box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan)}
+  h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(1.7rem,4.5vw,2.3rem);margin:8px 0 8px;line-height:1.1}
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--dim);font-size:14.5px;line-height:1.55;margin-bottom:24px}
+
+  .flashwrap{display:flex;justify-content:center;margin:6px 0 4px}
+  esp-web-install-button{--esp-tools-button-color:#04111a;}
+  /* Style the slotted button to match the brand. */
+  .flash-btn{display:inline-flex;align-items:center;gap:10px;font-family:"Inter",sans-serif;font-weight:600;font-size:16px;
+    color:#04111a;background:var(--grad);border:0;border-radius:14px;padding:15px 26px;cursor:pointer;
+    box-shadow:0 12px 34px rgba(51,235,255,.25);}
+  .flash-btn:hover{transform:translateY(-1px)}
+  .unsupported{display:none;margin-top:14px;font-size:13px;color:#ffb3c1;background:rgba(255,90,120,.1);
+    border:1px solid rgba(255,90,120,.35);border-radius:12px;padding:12px 14px;line-height:1.5}
+
+  .steps{margin-top:28px;display:flex;flex-direction:column;gap:14px}
+  .step{display:flex;gap:13px;align-items:flex-start}
+  .step .n{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-family:"JetBrains Mono",monospace;
+    font-size:12px;font-weight:600;color:#bfe9ff;border:1px solid rgba(120,200,255,.32);background:rgba(51,235,255,.06)}
+  .step .t{font-size:13.5px;color:var(--dim);line-height:1.5}
+  .step .t b{color:var(--text)}
+
+  .note{margin-top:24px;font-size:12.5px;color:#9aa3c0;line-height:1.6;border-top:1px solid rgba(255,255,255,.08);padding-top:18px}
+  .note a{color:#8fb6ff;text-decoration:none}
+  .note code{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#bfe9ff;background:rgba(8,12,22,.7);
+    border:1px solid rgba(120,200,255,.2);border-radius:6px;padding:1px 6px}
+  .foot{margin-top:28px;color:#5b6488;font-size:12px;text-align:center}
+  .foot a{color:#8fb6ff;text-decoration:none}
+</style>
+</head>
+<body>
+  <div class="brandbar">
+    <img src="assets/logo.svg" alt="Credent" />
+    <div class="wm">CRE<span>DENT</span></div>
+  </div>
+
+  <div class="card">
+    <span class="eyebrow">ESP32‑S3 · flash from your browser</span>
+    <h1>Flash your <span class="g">Mino</span></h1>
+    <p class="lead">
+      Plug your Mino (ESP32‑S3) into this computer with a USB‑C cable and click
+      <b>Flash Mino</b>. No software to install — your browser does it. Works in
+      <b>Chrome</b> and <b>Edge</b> on desktop.
+    </p>
+
+    <div class="flashwrap">
+      <esp-web-install-button manifest="firmware/manifest.json">
+        <button slot="activate" class="flash-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Flash Mino
+        </button>
+        <span slot="unsupported" class="unsupported" style="display:block">
+          Your browser can’t flash devices. Open this page in <b>Chrome</b> or
+          <b>Edge</b> on a desktop computer (Web Serial isn’t available on
+          Firefox, Safari, or most phones).
+        </span>
+        <span slot="not-allowed" class="unsupported" style="display:block">
+          This page must be served over <b>https</b> (or localhost) to access the
+          USB serial port.
+        </span>
+      </esp-web-install-button>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="t">Connect Mino to this computer with a <b>USB‑C data cable</b> (not a charge‑only cable).</div></div>
+      <div class="step"><div class="n">2</div><div class="t">Click <b>Flash Mino</b> and pick the device’s serial port when prompted.</div></div>
+      <div class="step"><div class="n">3</div><div class="t">Wait for it to finish, then follow the on‑device setup: join the <code>Credent‑Mino</code> Wi‑Fi, enter your Wi‑Fi, and <a href="esp-pair.html">pair it here</a>.</div></div>
+    </div>
+
+    <div class="note">
+      <b>Building your own?</b> Prefer to compile it yourself — grab the
+      <a href="downloads/credent-mino-firmware.zip" download>firmware source</a>
+      and flash with PlatformIO (<code>pio run -t upload</code>). The web flasher
+      above is the no‑install path for everyone else.
+    </div>
+  </div>
+
+  <div class="foot">
+    Powered by <b>Emrys</b> · Credent Company Limited · <a href="voice-demo.html">See how it works</a> · <a href="index.html">Home</a>
+  </div>
+</body>
+</html>
