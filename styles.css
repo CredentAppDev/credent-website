@@ -22,7 +22,13 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-html, body { width: 100%; overflow-x: hidden; }
+/* `overflow-x: clip` instead of `hidden`: hidden forces overflow-y to compute
+   to `auto`, turning html/body into nested scroll containers — that loses
+   native momentum scrolling on Android and makes mouse-wheel scrolling janky on
+   desktop. `clip` hides the same horizontal bleed without creating a scroll
+   container, so the root viewport scrolls natively. (hidden kept as a fallback
+   for browsers without clip support.) */
+html, body { width: 100%; overflow-x: hidden; overflow-x: clip; }
 body {
   background: var(--bg);
   color: var(--fg);

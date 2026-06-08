@@ -31,7 +31,11 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  /* clip (not hidden) so the body doesn't become its own scroll container —
+     keeps native momentum scrolling on Android + smooth wheel on desktop.
+     hidden kept as a fallback for browsers without overflow clip support. */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
