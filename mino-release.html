@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#05060c" />
+<title>Mino can move now — Credent voice robots</title>
+<meta name="description" content="Credent's Mino firmware now turns voice into motion. Say 'turn left' and your robot turns left — Emrys is the brain, your hardware is the body. Build your own voice-controlled robot." />
+<meta property="og:title" content="Mino can move now — build a voice-controlled robot" />
+<meta property="og:description" content="Say 'turn left' and the robot turns left. Credent's Mino firmware turns voice into real-world action — Emrys decides, your motors move." />
+<link rel="canonical" href="https://credentgh.com/mino-release.html" />
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root{ --cyan:#33EBFF; --blue:#0087D1; --indigo:#6C5CE7; --magenta:#FF00FF;
+    --bg:#05060c; --text:#eef1fb; --dim:#9aa3c0; --stroke:rgba(255,255,255,.12);
+    --grad:linear-gradient(120deg,var(--cyan),var(--blue) 35%,var(--indigo) 65%,var(--magenta)); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:
+      radial-gradient(60% 50% at 75% -10%,rgba(108,92,231,.20),transparent 70%),
+      radial-gradient(45% 45% at 5% 8%,rgba(51,235,255,.12),transparent 70%),
+      radial-gradient(50% 50% at 50% 115%,rgba(255,0,255,.10),transparent 70%),
+      linear-gradient(180deg,#070815,#04050b 70%);
+    color:var(--text);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    min-height:100vh;line-height:1.6;}
+  .wrap{max-width:840px;margin:0 auto;padding:30px 22px 80px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .brand img{width:32px;height:auto;filter:drop-shadow(0 4px 16px rgba(108,92,231,.55))}
+  .brand .wm{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.15em;font-size:14px;color:var(--text)}
+  .brand .wm span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .home{font-size:12.5px;color:var(--dim);text-decoration:none;border:1px solid var(--stroke);border-radius:999px;padding:7px 14px;transition:.2s}
+  .home:hover{color:var(--text);border-color:rgba(51,235,255,.5)}
+
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan)}
+  h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.05;letter-spacing:-.015em;margin:12px 0 18px}
+  h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .subhead{font-size:clamp(1.05rem,2vw,1.3rem);color:#c7cfe6;max-width:60ch;margin-bottom:30px}
+  .lead{font-size:clamp(1rem,1.5vw,1.12rem);color:var(--dim);max-width:64ch}
+
+  .demo-line{margin:36px 0;padding:22px 24px;border-radius:18px;border:1px solid rgba(120,200,255,.22);
+    background:linear-gradient(165deg,rgba(20,24,42,.7),rgba(9,11,22,.6));backdrop-filter:blur(16px);
+    font-family:"JetBrains Mono",monospace;font-size:clamp(13px,1.7vw,15px);line-height:1.9;color:#bfe9ff}
+  .demo-line b{color:#fff}
+  .demo-line .you{color:#6fd0ff}
+  .demo-line .act{color:#9af7c9}
+
+  .feat{margin-top:48px}
+  .feat h2{font-family:"Space Grotesk",sans-serif;font-size:clamp(1.3rem,3vw,1.8rem);margin-bottom:8px}
+  .feat h2 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .feat .k{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+  .feat p{color:var(--dim);max-width:62ch;margin-top:8px}
+  .feat + .feat{margin-top:40px;border-top:1px solid rgba(255,255,255,.07);padding-top:40px}
+  .feat code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:#bfe9ff;background:rgba(8,12,22,.7);border:1px solid rgba(120,200,255,.2);border-radius:6px;padding:1px 6px}
+
+  .cta{margin-top:56px;padding:34px 30px;border-radius:22px;text-align:center;
+    background:radial-gradient(70% 80% at 50% 0%,rgba(108,92,231,.22),transparent 70%),linear-gradient(165deg,rgba(20,24,42,.7),rgba(9,11,22,.6));
+    border:1px solid var(--stroke)}
+  .cta h2{font-family:"Space Grotesk",sans-serif;font-size:clamp(1.4rem,3.5vw,2rem);margin-bottom:8px}
+  .cta p{color:var(--dim);margin-bottom:22px}
+  .btns{display:flex;flex-wrap:wrap;gap:13px;justify-content:center}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;text-decoration:none;border-radius:14px;padding:14px 22px;transition:.2s}
+  .btn.primary{color:#04111a;background:var(--grad);box-shadow:0 12px 34px rgba(51,235,255,.25)}
+  .btn.primary:hover{transform:translateY(-1px)}
+  .btn.ghost{color:#bfe9ff;border:1px solid rgba(255,255,255,.16)}
+  .btn.ghost:hover{border-color:rgba(51,235,255,.5);color:#fff}
+
+  .tagline{margin-top:52px;text-align:center;font-family:"Space Grotesk",sans-serif;font-size:clamp(1.1rem,2.4vw,1.5rem);font-weight:600}
+  .tagline .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .fine{margin-top:30px;font-size:12px;color:#6b7493;text-align:center;line-height:1.7;max-width:60ch;margin-left:auto;margin-right:auto}
+  .note{margin-top:14px;font-size:11.5px;color:#7a83a3;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" alt="Credent" /><div class="wm">CRE<span>DENT</span></div></a>
+    <a class="home" href="index.html">← credentgh.com</a>
+  </div>
+
+  <!-- HEADLINE -->
+  <div class="eyebrow">Mino firmware · new capability</div>
+  <h1>Now your words make it <span class="g">move</span>.</h1>
+
+  <!-- SUBHEAD -->
+  <p class="subhead">
+    Mino — Credent’s voice device — can now turn speech into real-world action.
+    Say <em>“turn left”</em> and the robot turns left. Emrys is the brain; your
+    hardware is the body.
+  </p>
+
+  <!-- LEAD -->
+  <p class="lead">
+    We’ve extended the Mino firmware so a child can <strong style="color:#eef1fb;">speak a
+    command and watch the world respond</strong>. Emrys — Credent’s agentic AI tutor —
+    hears the request, understands it, and tells the device exactly what to do.
+    The result is hands-on robotics that starts with a sentence, not a screen.
+    Everything runs on Credent’s own voice engine, with Emrys as the only AI brain.
+  </p>
+
+  <!-- the demo line -->
+  <div class="demo-line">
+    <span class="you">Child:</span> “Hey Emrys, <b>turn left</b>.”<br>
+    <span style="color:var(--dim)">→ mic → speech-to-text → Emrys understands → device command</span><br>
+    <span class="act">Mino:</span> left motor runs <b>*whirr*</b> — “Turned left! Want to go forward next?”
+  </div>
+
+  <!-- FEATURE 1 — Voice to motion -->
+  <div class="feat">
+    <div class="k">Feature · Voice → motion</div>
+    <h2>Speak it. <span class="g">It moves.</span></h2>
+    <p>
+      The firmware now ships with voice‑driven movement —
+      <code>forward</code>, <code>backward</code>, <code>left</code>, <code>right</code>,
+      and <code>stop</code> — built on a simple two‑motor design. Emrys decides
+      <em>what</em> to do from natural speech; the firmware drives the motors. The
+      same pattern powers <code>set_led</code> for lights, so anything you wire up,
+      you can control by voice.
+    </p>
+  </div>
+
+  <!-- FEATURE 2 — Build your own -->
+  <div class="feat">
+    <div class="k">Feature · For makers & classrooms</div>
+    <h2>Build your own <span class="g">voice robot</span>.</h2>
+    <p>
+      This is a foundation, not a black box. Download the firmware source, set your
+      motor pins, flip one switch (<code>MOTORS_ENABLED</code>), and flash. Add your
+      own actions — an arm, a gripper, a buzzer — by copying one example. It’s the
+      Credent way to teach robotics: real hardware, guided by an AI teacher, starting
+      from a child’s own voice.
+    </p>
+  </div>
+
+  <!-- FEATURE 3 — Credent-owned -->
+  <div class="feat">
+    <div class="k">Feature · Credent‑owned</div>
+    <h2>Yours, end to end.</h2>
+    <p>
+      Voice detection, speech‑to‑text, and the spoken reply all run on Credent’s own
+      engine — not a third‑party cloud. Emrys is the brain. That means privacy you
+      control, and a path to local languages the big assistants ignore.
+    </p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>Start building</h2>
+    <p>Explore how it works, or grab the firmware and make something move.</p>
+    <div class="btns">
+      <a class="btn primary" href="voice-demo.html">See how it works
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn ghost" href="downloads/credent-mino-firmware.zip" download>Download the firmware</a>
+      <a class="btn ghost" href="flash.html">Flash a device</a>
+    </div>
+  </div>
+
+  <!-- TAGLINE -->
+  <div class="tagline">Credent — robotics that begins with <span class="g">a child’s voice</span>.</div>
+
+  <!-- FINE PRINT -->
+  <p class="fine">
+    Voice‑controlled movement requires an ESP32‑S3 device with motors wired by the
+    builder, and the Credent voice engine running on a reachable host. Motor support
+    is off by default and enabled in the firmware config. This is a developer/maker
+    capability — designed to be built with, not a finished consumer product.
+  </p>
+  <p class="note">Firmware source available now · one‑click browser flashing coming soon.</p>
+</div>
+</body>
+</html>
