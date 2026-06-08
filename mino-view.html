@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mino Vision — let Mino see your screen</title>
+<meta name="robots" content="noindex" />
+<meta name="description" content="Give Mino a one-time, watch-only view of your screen so Emrys can help you on your computer. Nothing is installed; you can stop anytime." />
+<style>
+  :root{
+    --bg:#05060a; --fg:#eef1f7; --muted:#9aa3b2;
+    --cyan:#33ebff; --magenta:#ff3df0; --line:rgba(255,255,255,.10);
+    --ok:#34c759; --warn:#ff9f0a; --bad:#ff453a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%, rgba(51,235,255,.10), transparent 60%),
+               radial-gradient(900px 500px at 90% 110%, rgba(255,61,240,.10), transparent 60%), var(--bg);
+    color:var(--fg); font:15px/1.55 'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    min-height:100%; display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .card{
+    width:100%; max-width:760px; background:rgba(255,255,255,.03);
+    border:1px solid var(--line); border-radius:20px; padding:28px; backdrop-filter:blur(14px);
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+  }
+  .head{display:flex; align-items:center; gap:14px; margin-bottom:6px}
+  .mark{
+    width:42px; height:42px; border-radius:12px; flex:0 0 auto;
+    background:conic-gradient(from 200deg,var(--cyan),var(--magenta),var(--cyan));
+    display:grid; place-items:center; font-size:20px;
+  }
+  h1{font-size:20px; font-weight:700; letter-spacing:-.2px}
+  .sub{color:var(--muted); font-size:13px}
+  .privacy{
+    margin:18px 0; padding:12px 14px; border-radius:12px; font-size:13px; color:var(--muted);
+    background:rgba(51,235,255,.06); border:1px solid rgba(51,235,255,.18);
+  }
+  .privacy b{color:var(--fg)}
+  .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:16px}
+  .btn{
+    appearance:none; border:none; cursor:pointer; font:inherit; font-weight:600;
+    padding:11px 18px; border-radius:12px; color:#04121a;
+    background:linear-gradient(135deg,var(--cyan),#7af);
+    transition:transform .15s ease, opacity .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px)} .btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+  .btn.ghost{background:transparent; color:var(--fg); border:1px solid var(--line)}
+  .btn.stop{background:linear-gradient(135deg,#ff6b6b,var(--magenta)); color:#fff}
+  .field{display:flex; gap:8px; align-items:center; flex:1; min-width:220px}
+  .field input{
+    flex:1; background:rgba(255,255,255,.05); border:1px solid var(--line); color:var(--fg);
+    padding:11px 14px; border-radius:12px; font:inherit; letter-spacing:3px; text-align:center;
+  }
+  .preview{
+    margin-top:18px; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+    background:#000; aspect-ratio:16/9; display:grid; place-items:center; position:relative;
+  }
+  .preview video{width:100%; height:100%; object-fit:contain; display:none}
+  .preview .empty{color:var(--muted); font-size:13px; text-align:center; padding:20px}
+  .status{display:flex; align-items:center; gap:8px; margin-top:14px; font-size:13px; color:var(--muted)}
+  .dot{width:9px; height:9px; border-radius:50%; background:var(--muted); flex:0 0 auto}
+  .dot.on{background:var(--ok); box-shadow:0 0 10px var(--ok)}
+  .dot.warn{background:var(--warn)} .dot.bad{background:var(--bad)}
+  .meta{margin-top:10px; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums}
+  code{background:rgba(255,255,255,.07); padding:1px 6px; border-radius:6px; font-size:12px}
+  .hide{display:none !important}
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="head">
+      <div class="mark">✦</div>
+      <div>
+        <h1>Mino Vision</h1>
+        <div class="sub">Let Mino see your screen so Emrys can help you on your computer.</div>
+      </div>
+    </div>
+
+    <div class="privacy">
+      🔒 <b>Watch-only.</b> This page lets Mino <b>see</b> your screen — it can never click or type from
+      here (that's Mino's keyboard, which you plug in or pair separately). Nothing is installed.
+      You can <b>Stop sharing</b> any time, and your browser shows a sharing indicator the whole time.
+    </div>
+
+    <!-- Step 1: self-test capture (works with no server) -->
+    <div class="row">
+      <button class="btn" id="startBtn">Share my screen</button>
+      <button class="btn stop hide" id="stopBtn">Stop sharing</button>
+      <button class="btn ghost hide" id="grabBtn">Capture a frame</button>
+    </div>
+
+    <div class="preview">
+      <video id="preview" autoplay muted playsinline></video>
+      <div class="empty" id="emptyHint">Click <b>“Share my screen”</b> and choose your whole screen.
+        You'll see a live preview here.</div>
+    </div>
+
+    <div class="status"><span class="dot" id="capDot"></span><span id="capMsg">Not sharing.</span></div>
+    <div class="meta" id="metaLine"></div>
+
+    <!-- Step 2: connect to Mino (the voice server requests frames on demand) -->
+    <div class="row" style="margin-top:22px">
+      <div class="field">
+        <input id="code" inputmode="numeric" maxlength="6" placeholder="MINO CODE" aria-label="Mino pairing code" />
+      </div>
+      <button class="btn ghost" id="connectBtn" disabled>Connect to Mino</button>
+      <button class="btn ghost hide" id="disconnectBtn">Disconnect</button>
+    </div>
+    <div class="status"><span class="dot" id="wsDot"></span><span id="wsMsg">Share your screen first, then enter the code Mino speaks.</span></div>
+  </main>
+
+<script>
+// ── Mino Vision — the "eyes" helper ──────────────────────────────────────────
+// PURPOSE: a zero-install browser page that gives Mino a WATCH-ONLY view of the
+// screen. The voice server's computer-use loop (Phase C) asks this page for a
+// screenshot whenever Claude needs to "look"; the page answers with a JPEG. It
+// also reports the screen resolution so Claude's click coordinates map to Mino's
+// absolute-mouse range. This page CANNOT inject input — that's Mino's HID.
+//
+// Helper WS protocol (this page ⇄ voice server):
+//   → {type:"helper_hello", code:"123456", w, h, dpr}
+//   ← {type:"ready"} | {type:"error", message}
+//   ← {type:"screenshot_request", id}
+//   → {type:"screenshot", id, w, h, image:"data:image/jpeg;base64,..."}
+//   → {type:"resolution", w, h}            (on screen/display change)
+// The WS endpoint is configurable; defaults to the Credent voice server.
+const VOICE_WS = (location.hash.match(/ws=([^&]+)/)?.[1] &&
+                  decodeURIComponent(location.hash.match(/ws=([^&]+)/)[1]))
+              || "wss://credent-backend.onrender.com:8765/helper";
+
+const $ = (id) => document.getElementById(id);
+let stream = null, ws = null, frameTrack = null;
+
+function setCap(state, msg){ const d=$("capDot"); d.className="dot "+(state||""); $("capMsg").textContent=msg; }
+function setWs(state, msg){ const d=$("wsDot"); d.className="dot "+(state||""); $("wsMsg").textContent=msg; }
+
+function screenSize(){
+  const s = stream && stream.getVideoTracks()[0]?.getSettings();
+  const w = s?.width  || window.screen.width;
+  const h = s?.height || window.screen.height;
+  return { w, h, dpr: window.devicePixelRatio || 1 };
+}
+
+async function startShare(){
+  try{
+    stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { frameRate: 5 },   // we only need stills; low fps = light
+      audio: false,
+    });
+  }catch(e){ setCap("warn", "Screen share was cancelled or blocked."); return; }
+
+  const v = $("preview");
+  v.srcObject = stream; v.style.display = "block"; $("emptyHint").classList.add("hide");
+  $("startBtn").classList.add("hide");
+  $("stopBtn").classList.remove("hide"); $("grabBtn").classList.remove("hide");
+  $("connectBtn").disabled = false;
+
+  const { w, h, dpr } = screenSize();
+  setCap("on", "Sharing your screen.");
+  $("metaLine").textContent = `Resolution ${w}×${h} · scale ${dpr}× · ${stream.getVideoTracks().length} track(s)`;
+
+  // The user ending the share from the browser chrome must clean us up too.
+  stream.getVideoTracks()[0].addEventListener("ended", stopShare);
+  // If connected, tell the server the (possibly new) resolution.
+  sendJson({ type:"resolution", w, h });
+}
+
+function stopShare(){
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  const v=$("preview"); v.srcObject=null; v.style.display="none"; $("emptyHint").classList.remove("hide");
+  $("startBtn").classList.remove("hide");
+  $("stopBtn").classList.add("hide"); $("grabBtn").classList.add("hide");
+  $("connectBtn").disabled = true;
+  setCap("", "Not sharing."); $("metaLine").textContent="";
+  disconnect();
+}
+
+// Grab one still frame from the shared stream as a JPEG data URL.
+async function captureFrame(quality = 0.7){
+  if(!stream) return null;
+  const v = $("preview");
+  const { w, h } = screenSize();
+  const canvas = document.createElement("canvas");
+  canvas.width = w; canvas.height = h;
+  canvas.getContext("2d").drawImage(v, 0, 0, w, h);
+  return { image: canvas.toDataURL("image/jpeg", quality), w, h };
+}
+
+// Self-test: capture a frame and open it so the user can confirm capture works
+// even before any server exists.
+async function grabAndShow(){
+  const f = await captureFrame(0.85);
+  if(!f) return;
+  const win = window.open();
+  if(win){ win.document.write(`<img src="${f.image}" style="max-width:100%"/>`); win.document.title="Mino captured this frame"; }
+}
+
+// ── WebSocket to the voice server ──────────────────────────────────────────
+function sendJson(obj){ if(ws && ws.readyState===1) ws.send(JSON.stringify(obj)); }
+
+function connect(){
+  const code = ($("code").value||"").trim();
+  if(!/^\d{6}$/.test(code)){ setWs("warn","Enter the 6-digit code Mino speaks."); return; }
+  if(!stream){ setWs("warn","Share your screen first."); return; }
+  setWs("warn","Connecting to Mino…");
+  try{ ws = new WebSocket(VOICE_WS); }catch(e){ setWs("bad","Could not open connection."); return; }
+
+  ws.onopen = () => {
+    const { w, h, dpr } = screenSize();
+    sendJson({ type:"helper_hello", code, w, h, dpr });
+  };
+  ws.onmessage = async (ev) => {
+    let m; try{ m = JSON.parse(ev.data); }catch{ return; }
+    if(m.type==="ready"){
+      setWs("on","Connected — Mino can see your screen when it needs to.");
+      $("connectBtn").classList.add("hide"); $("disconnectBtn").classList.remove("hide");
+    } else if(m.type==="error"){
+      setWs("bad", m.message || "Mino rejected the connection.");
+    } else if(m.type==="screenshot_request"){
+      const f = await captureFrame(0.6);
+      if(f) sendJson({ type:"screenshot", id:m.id, w:f.w, h:f.h, image:f.image });
+    }
+  };
+  ws.onclose = () => {
+    setWs("", "Disconnected.");
+    $("connectBtn").classList.remove("hide"); $("disconnectBtn").classList.add("hide");
+  };
+  ws.onerror = () => setWs("bad","Connection error.");
+}
+
+function disconnect(){ if(ws){ try{ws.close();}catch{} ws=null; } }
+
+$("startBtn").onclick = startShare;
+$("stopBtn").onclick = stopShare;
+$("grabBtn").onclick = grabAndShow;
+$("connectBtn").onclick = connect;
+$("disconnectBtn").onclick = disconnect;
+
+if(!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia){
+  setCap("bad","This browser can't share the screen. Use Chrome, Edge, or Safari on a laptop.");
+  $("startBtn").disabled = true;
+}
+</script>
+</body>
+</html>
