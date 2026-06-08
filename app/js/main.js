@@ -33,14 +33,14 @@
       heroBtn.querySelector("[data-os-label]").textContent = "Download for Windows";
       if (hint) hint.textContent = "Windows 10 / 11 · 72 MB · also available for macOS";
     } else if (os === "mac") {
-      // Mac build not ready yet — point to the download page where it's marked Coming soon
-      heroBtn.setAttribute("href", "download.html");
-      heroBtn.querySelector("[data-os-label]").textContent = "Get Credent for Mac";
-      if (hint) hint.textContent = "macOS build coming soon — Windows available now";
+      heroBtn.setAttribute("href", "https://github.com/CredentAppDev/credent-website/releases/download/v1.2.8/Credent-1.2.8.dmg");
+      heroBtn.setAttribute("download", "");
+      heroBtn.querySelector("[data-os-label]").textContent = "Download for macOS";
+      if (hint) hint.textContent = "macOS 10.15+ · Intel & Apple Silicon (Rosetta) · also on Windows";
     } else {
       heroBtn.setAttribute("href", "download.html");
       heroBtn.querySelector("[data-os-label]").textContent = "View downloads";
-      if (hint) hint.textContent = "Available for Windows · macOS coming soon";
+      if (hint) hint.textContent = "Available for Windows and macOS";
     }
   }
 
