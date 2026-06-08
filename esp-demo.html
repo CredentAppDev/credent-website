@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Credent · ESP32-S3 — Guided by Emrys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+<style>
+  :root{ --cyan:#33EBFF; --blue:#0087D1; --indigo:#6C5CE7; --magenta:#FF00FF;
+    --bg:#05060c; --text:#eef1fb; --dim:#9aa3c0; --stroke:rgba(255,255,255,.12);
+    --grad:linear-gradient(120deg,var(--cyan),var(--blue) 35%,var(--indigo) 65%,var(--magenta));
+    --rail:clamp(330px,31vw,440px); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--text);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+  .reel{position:fixed;inset:0;overflow:hidden;background:
+      radial-gradient(55% 50% at 62% -8%,rgba(108,92,231,.22),transparent 70%),
+      radial-gradient(45% 45% at 92% 12%,rgba(255,0,255,.12),transparent 70%),
+      radial-gradient(50% 55% at 50% 110%,rgba(51,235,255,.12),transparent 70%),
+      linear-gradient(180deg,#070815,#04050b 70%);}
+  canvas{display:block}
+  #bg{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:.65}
+  .grid{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.3;
+    background-image:linear-gradient(rgba(120,160,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,255,.06) 1px,transparent 1px);
+    background-size:46px 46px;mask:radial-gradient(75% 75% at 60% 55%,#000 40%,transparent 100%);animation:gp 22s linear infinite}
+  @keyframes gp{to{background-position:46px 46px}}
+  .vignette{position:absolute;inset:0;z-index:6;pointer-events:none;box-shadow:inset 0 0 260px rgba(0,0,0,.85)}
+  .scan{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:.45;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.022) 0 1px,transparent 1px 4px)}
+  .hud{position:absolute;inset:24px;z-index:6;pointer-events:none}
+  .br{position:absolute;width:30px;height:30px;border:2px solid rgba(120,200,255,.4);filter:drop-shadow(0 0 6px rgba(51,235,255,.4))}
+  .br.tl{top:0;left:0;border-right:0;border-bottom:0}.br.tr{top:0;right:0;border-left:0;border-bottom:0}
+  .br.bl{bottom:0;left:0;border-right:0;border-top:0}.br.br2{bottom:0;right:0;border-left:0;border-top:0}
+
+  .stage{position:absolute;left:var(--rail);top:0;right:0;bottom:0;z-index:2}
+  #three{position:absolute;inset:0;width:100%;height:100%}
+  .labels{position:absolute;inset:0;z-index:4;pointer-events:none}
+  .lab{position:absolute;transform:translate(-50%,-50%);font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#dff3ff;white-space:nowrap;opacity:0;transition:opacity .45s}
+  .lab.on{opacity:.96}
+  .lab .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);display:inline-block;margin-right:8px;vertical-align:middle;animation:bp 1.4s infinite}
+  @keyframes bp{50%{transform:scale(1.5);opacity:.6}}
+  .lab .t{background:rgba(8,12,22,.72);border:1px solid rgba(120,200,255,.32);border-radius:7px;padding:4px 10px;backdrop-filter:blur(6px)}
+
+  .brandbar{position:absolute;top:32px;left:34px;z-index:8;display:flex;align-items:center;gap:13px}
+  .brandbar .mark{width:42px;height:31px;filter:drop-shadow(0 4px 16px rgba(108,92,231,.55))}
+  .brandbar .wm{font-weight:800;letter-spacing:.14em;font-size:15px}
+  .brandbar .wm span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brandbar .sub{font-size:11px;color:var(--dim);letter-spacing:.22em;text-transform:uppercase;margin-top:2px}
+  .tag-pill{margin-left:6px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#bfe9ff;border:1px solid rgba(51,235,255,.35);border-radius:999px;padding:5px 10px;background:rgba(51,235,255,.06)}
+  .nowbuild{position:absolute;top:34px;right:38px;z-index:7;text-align:right}
+  .nowbuild .k{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  .nowbuild .v{font-size:18px;font-weight:700;margin-top:3px}
+  .nowbuild .v b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  .chat{position:absolute;left:24px;top:92px;bottom:24px;z-index:8;width:calc(var(--rail) - 42px);display:flex;flex-direction:column;
+    background:linear-gradient(165deg,rgba(20,24,42,.72),rgba(9,11,22,.62));border:1px solid var(--stroke);border-radius:22px;
+    backdrop-filter:blur(22px) saturate(140%);box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden}
+  .chat-h{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+  .orb{width:36px;height:36px;border-radius:50%;background:conic-gradient(from 200deg,var(--cyan),var(--indigo),var(--magenta),var(--blue),var(--cyan));box-shadow:0 0 18px rgba(108,92,231,.7);position:relative;flex:none}
+  .orb::after{content:"";position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.95),rgba(255,255,255,0) 60%),#0a0c18}
+  .chat-h .nm{font-weight:700;font-size:14px}.chat-h .st{font-size:11px;color:#7fffc4;display:flex;align-items:center;gap:5px}
+  .chat-h .st i{width:6px;height:6px;border-radius:50%;background:#28e08a;box-shadow:0 0 8px #28e08a;display:inline-block;animation:pl 1.6s infinite}
+  @keyframes pl{50%{opacity:.35}}
+  .msgs{flex:1;padding:18px 16px 8px;display:flex;flex-direction:column;gap:11px;overflow:hidden;justify-content:flex-end}
+  .b{max-width:90%;padding:11px 15px;border-radius:16px;font-size:14px;line-height:1.5;opacity:0;transform:translateY(10px);animation:rise .45s forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .b.them{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:5px}
+  .b.me{align-self:flex-end;color:#04111a;background:linear-gradient(120deg,var(--cyan),#6fd0ff);border-bottom-right-radius:5px;font-weight:500;box-shadow:0 8px 26px rgba(51,235,255,.3)}
+  .b.them b{color:#bfe9ff}
+  .dots{display:inline-flex;gap:4px}.dots i{width:6px;height:6px;border-radius:50%;background:#cdd6f5;animation:bn 1.2s infinite}
+  .dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+  @keyframes bn{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+  .inputbar{display:flex;align-items:center;gap:10px;margin:8px 14px 16px;padding:12px 14px;border-radius:14px;background:rgba(8,10,20,.7);border:1px solid rgba(255,255,255,.1)}
+  .inputbar .ph{flex:1;font-size:14px;white-space:nowrap;overflow:hidden}.inputbar .ph.empty{color:#5b6488}
+  .caret{display:inline-block;width:2px;height:16px;background:var(--cyan);vertical-align:-3px;margin-left:1px;animation:bk 1s steps(1) infinite;box-shadow:0 0 8px var(--cyan)}
+  @keyframes bk{50%{opacity:0}}
+  .send{width:36px;height:36px;border-radius:10px;flex:none;display:grid;place-items:center;background:var(--grad);color:#fff;transition:transform .2s}
+  .send.go{transform:scale(1.12)}.send svg{width:18px;height:18px}
+
+  .caption{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);z-index:5;text-align:center;width:min(64%,600px);opacity:0;transition:opacity .4s}
+  .caption .step{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
+  .caption .txt{font-size:17px;font-weight:600;margin-top:6px;line-height:1.4;text-shadow:0 2px 22px rgba(0,0,0,.8)}
+
+  .loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;color:var(--dim);font-size:13px;letter-spacing:.05em;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+  .spin{width:38px;height:38px;border-radius:50%;border:2.5px solid rgba(255,255,255,.12);border-top-color:var(--cyan);animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .loading b{color:var(--cyan);font-variant-numeric:tabular-nums}
+
+  .finale{position:absolute;inset:0;z-index:7;display:grid;place-items:end center;pointer-events:none;opacity:0;transition:opacity .8s;
+    background:radial-gradient(72% 60% at 50% 40%,rgba(5,6,12,.04),rgba(5,6,12,.58))}
+  .finale.show{opacity:1}
+  .finale .in{text-align:center;transform:translateY(16px);transition:transform .9s cubic-bezier(.2,.8,.2,1);padding-bottom:7vh}
+  .finale.show .in{transform:none}
+  .finale .ln{font-size:clamp(24px,3.6vw,46px);font-weight:800;letter-spacing:-.01em;line-height:1.05}
+  .finale .ln b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .finale .sub{margin-top:14px;color:#c7cfe6;font-size:15px;text-shadow:0 2px 16px rgba(0,0,0,.7)}
+  .finale .wm{margin-top:24px;font-weight:800;letter-spacing:.3em;font-size:13px}
+  .finale .wm span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .replay{position:absolute;bottom:20px;right:24px;z-index:9;font-family:inherit;font-size:12px;color:var(--dim);background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:999px;padding:8px 15px;cursor:pointer;backdrop-filter:blur(8px);opacity:0;transition:.3s}
+  .replay.show{opacity:1}.replay:hover{color:var(--text);border-color:rgba(51,235,255,.5)}
+</style>
+</head>
+<body>
+<div class="reel" id="reel">
+  <canvas id="bg"></canvas>
+  <div class="grid"></div>
+  <div class="stage" id="stage">
+    <canvas id="three"></canvas>
+    <div class="labels" id="labels"></div>
+    <div class="loading" id="loading"><div class="spin"></div><div>Loading the ESP32-S3 model… <b id="pct">0%</b></div></div>
+    <div class="nowbuild" id="nowbuild" style="opacity:0"><div class="k">Inspecting</div><div class="v">ESP32-S3 <b>· AI Cam</b></div></div>
+    <div class="caption" id="caption"><div class="step" id="capstep"></div><div class="txt" id="captxt"></div></div>
+    <div class="finale" id="finale"><div class="in">
+      <div class="ln">The brain behind<br/>every <b>Credent</b> build.</div>
+      <div class="sub">Emrys knows every part — and teaches it, one step at a time.</div>
+      <div class="wm">CRE<span>DENT</span></div>
+    </div></div>
+  </div>
+  <div class="hud"><span class="br tl"></span><span class="br tr"></span><span class="br bl"></span><span class="br br2"></span></div>
+  <div class="scan"></div><div class="vignette"></div>
+  <div class="brandbar">
+    <svg class="mark" viewBox="0 0 367 264" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M181.54 39.55L226.7 38.43l1.45.79C240.47 177.27 183.54 189.18 183.54 189.18L181.54 39.6Z" fill="#FF00FF"/>
+      <path d="M181.83 41.12C279.1 27.14 299.33 46.36 313.7 99.03 329.17 155.78 271.07 205.52 271.07 205.52 420.16 157.29 396.45-27.73 180.22 4.05" fill="#00FFFF"/>
+      <path d="M270.64 244.26C374.42 231.28 365.9 106.05 365.9 106.05 365.9 106.05 361.25 204.28 228.56 210.4" fill="#FF00FF"/>
+      <path d="M180.88 249.79C194.64 221.63 211.36 188.56 224.63 160.09L227.3 208.87 272.54 243.91C240.68 249.56 180.88 249.79 180.88 249.79Z" fill="#0000FF"/>
+      <path d="M159.45 2.53l-.12 34C159.33 36.54 36.07 5.6 60.51 142.69 73.64 216.28 176.51 251.27 229.11 134.51 229.11 134.51 200.03 293.32 82.18 257.06-18.48 226.09-57.92-19.59 159.45 2.53Z" fill="#FF00FF" stroke="#010805" stroke-width="2.26"/>
+      <path d="M160.48 56.07C66.02 35.69 58.86 110.79 58.86 110.79 54.2 72.28 76.83 46.15 109.2 35.69 131.01 28.64 159.74 35.29 159.74 35.29" fill="#00FFFF"/>
+    </svg>
+    <div><div class="wm">CRE<span>DENT</span></div><div class="sub">Build Studio</div></div>
+    <span class="tag-pill">Live 3D</span>
+  </div>
+  <aside class="chat">
+    <div class="chat-h"><div class="orb"></div><div><div class="nm">Emrys</div><div class="st"><i></i> AI build partner · online</div></div></div>
+    <div class="msgs" id="msgs"></div>
+    <div class="inputbar"><div class="ph empty" id="ph">Ask Emrys about your project…</div>
+      <div class="send" id="send"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 21 23 12 2 3l.01 7L17 12 2.01 14z"/></svg></div></div>
+  </aside>
+  <button class="replay" id="replay">↻ Replay</button>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+let bloom=null, EffectComposer, RenderPass, UnrealBloomPass;
+try {
+  ({ EffectComposer } = await import('three/addons/postprocessing/EffectComposer.js'));
+  ({ RenderPass } = await import('three/addons/postprocessing/RenderPass.js'));
+  ({ UnrealBloomPass } = await import('three/addons/postprocessing/UnrealBloomPass.js'));
+} catch(e){ console.warn('bloom unavailable',e); }
+
+const $=s=>document.querySelector(s); const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const canvas=$('#three');
+
+/* particles */
+const bg=$('#bg'),bx=bg.getContext('2d');let pts=[];
+function sizeBg(){bg.width=innerWidth;bg.height=innerHeight;pts=Array.from({length:Math.min(90,(bg.width*bg.height)/22000|0)},()=>({x:Math.random()*bg.width,y:Math.random()*bg.height,z:Math.random()*.8+.2,vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16}));}
+function drawBg(){bx.clearRect(0,0,bg.width,bg.height);for(const p of pts){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x+=bg.width;if(p.x>bg.width)p.x-=bg.width;if(p.y<0)p.y+=bg.height;if(p.y>bg.height)p.y-=bg.height;bx.beginPath();bx.arc(p.x,p.y,p.z*1.7,0,7);bx.fillStyle=`rgba(120,190,255,${p.z*.5})`;bx.fill();}}
+
+/* scene */
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.2;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(36,1,.1,500);
+scene.add(new THREE.AmbientLight(0x415072,1.0));
+scene.add(new THREE.HemisphereLight(0x9fc4ff,0x141826,1.1));
+const key=new THREE.DirectionalLight(0xffffff,2.5); key.position.set(6,9,5); scene.add(key);
+const rimC=new THREE.PointLight(0x33EBFF,80,60); rimC.position.set(-8,4,-5); scene.add(rimC);
+const rimM=new THREE.PointLight(0xFF00FF,60,60); rimM.position.set(7,2,-7); scene.add(rimM);
+try{ const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js');
+  const pm=new THREE.PMREMGenerator(renderer); scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture; }catch(e){}
+const floor=new THREE.Mesh(new THREE.CircleGeometry(11,64),new THREE.MeshStandardMaterial({color:0x0a0e1c,metalness:.5,roughness:.5,transparent:true,opacity:.85}));
+floor.rotation.x=-Math.PI/2; floor.position.y=-.01; scene.add(floor);
+const grid=new THREE.GridHelper(22,32,0x2a3970,0x162043); grid.material.transparent=true; grid.material.opacity=.32; scene.add(grid);
+const root=new THREE.Group(); scene.add(root);
+
+/* marker (glowing ring) that moves to the current part */
+const markerMat=new THREE.MeshBasicMaterial({color:0x33EBFF,transparent:true,opacity:.9});
+const marker=new THREE.Mesh(new THREE.TorusGeometry(.32,.05,16,40),markerMat); marker.visible=false; scene.add(marker);
+
+let espMesh=null, SIZE=new THREE.Vector3(), LOOK_Y=2, started=false;
+const stlL=new STLLoader();
+function loadEsp(){ return new Promise((res,rej)=>{
+  stlL.load('models/esp.stl', g=>res(g),
+    e=>{ if(e.total){ $('#pct').textContent=Math.round(e.loaded/e.total*100)+'%'; } },
+    err=>rej(err)); }); }
+
+async function buildEsp(){
+  let geo; try{ geo=await loadEsp(); }catch(e){ $('#loading').innerHTML='Could not load model.'; return; }
+  geo.computeVertexNormals();
+  geo.computeBoundingBox(); const bb=geo.boundingBox;
+  const size=bb.getSize(new THREE.Vector3()), center=bb.getCenter(new THREE.Vector3());
+  const longest=Math.max(size.x,size.y,size.z)||1, norm=5.4/longest;
+  const mat=new THREE.MeshStandardMaterial({color:0x12favorite||0x14202b,metalness:.55,roughness:.42,emissive:0x05161c,emissiveIntensity:.25});
+  espMesh=new THREE.Mesh(geo,mat); espMesh.castShadow=true;
+  const ng=new THREE.Group(); ng.scale.setScalar(norm); ng.position.set(-center.x*norm,-bb.min.y*norm,-center.z*norm); ng.add(espMesh);
+  root.add(ng);
+  SIZE.copy(size).multiplyScalar(norm); LOOK_Y=SIZE.y*0.5;
+  // anchors (in normalized, centered+grounded space) — spread tour points
+  const W=SIZE.x*0.5, D=SIZE.z*0.5, H=SIZE.y;
+  TOUR[0].pos=new THREE.Vector3(0,H*0.55,0);
+  TOUR[1].pos=new THREE.Vector3(0,H*0.92,D*0.3);
+  TOUR[2].pos=new THREE.Vector3(-W*0.72,H*0.7,-D*0.5);
+  TOUR[3].pos=new THREE.Vector3(W*0.78,H*0.45,D*0.1);
+  TOUR[4].pos=new THREE.Vector3(-W*0.8,H*0.4,D*0.4);
+  marker.scale.setScalar(Math.max(.5,SIZE.x*0.08));
+  $('#loading').style.display='none'; started=true;
+}
+
+/* tour parts (Emrys-guided) */
+const TOUR=[
+  { name:'ESP32-S3 SoC', step:'Part 1 · The processor', say:'This is the <b>ESP32-S3</b> — a dual-core chip that runs the wake-word and the on-device AI. It’s the brain of the whole build. 🧠', cap:'ESP32-S3 SoC — dual-core, runs the on-device AI.' },
+  { name:'Camera module', step:'Part 2 · The eye', say:'Up here is the <b>camera</b> — Mino’s eye. It captures what it sees so the AI can understand the world.', cap:'Camera module — Mino sees and captures.' },
+  { name:'Wi-Fi / BT antenna', step:'Part 3 · The link', say:'This corner is the <b>antenna</b> — Wi-Fi + Bluetooth, so Mino reaches the cloud and talks to your devices over MCP.', cap:'Wi-Fi + Bluetooth antenna — reach the cloud & control hardware.' },
+  { name:'USB-C', step:'Part 4 · Power & flash', say:'The <b>USB-C</b> port powers the board and flashes the firmware — one cable does both. 🔌', cap:'USB-C — power in, and one-cable firmware flashing.' },
+  { name:'GPIO header', step:'Part 5 · The hands', say:'And these <b>GPIO pins</b> are how Mino touches the real world — wire up motors, sensors, lights.', cap:'GPIO header — connect real hardware: motors, sensors, lights.' },
+];
+
+/* callout label tracking the current part */
+const labels=$('#labels'); let active=null;
+function showPart(i){
+  const t=TOUR[i]; if(!t||!t.pos) return;
+  if(active){ active.el.classList.remove('on'); const el=active.el; setTimeout(()=>el.remove(),400); }
+  const el=document.createElement('div'); el.className='lab';
+  el.innerHTML=`<span class="dot"></span><span class="t">${t.name}</span>`; labels.appendChild(el);
+  requestAnimationFrame(()=>el.classList.add('on'));
+  active={el,pos:t.pos.clone()};
+  marker.position.copy(t.pos); marker.visible=true; marker.userData.t0=performance.now();
+}
+
+/* camera + render loop */
+let ang=0, ORBIT=8.6;
+function tick(){
+  requestAnimationFrame(tick); drawBg();
+  if(started){ ang+=.0017; ORBIT+=(7.0-ORBIT)*0.004; }   // slow orbit + gentle zoom-in
+  const h=LOOK_Y+1.6+Math.sin(ang*1.2)*.4;
+  camera.position.set(Math.cos(ang)*ORBIT,h,Math.sin(ang)*ORBIT); camera.lookAt(0,LOOK_Y,0);
+  rimC.position.set(Math.cos(ang+2)*8,4,Math.sin(ang+2)*8);
+  marker.lookAt(camera.position);
+  if(marker.visible){ const k=((performance.now()-(marker.userData.t0||0))%1400)/1400; marker.scale.setScalar((Math.max(.5,SIZE.x*0.08))*(1+0.25*Math.sin(k*6.28))); markerMat.opacity=.5+.4*Math.cos(k*6.28); }
+  const cw=canvas.clientWidth, ch=canvas.clientHeight;
+  if(active){ const v=active.pos.clone(); v.project(camera);
+    if(v.z>1){ active.el.style.opacity=0; } else { active.el.style.left=((v.x*.5+.5)*cw)+'px'; active.el.style.top=((-v.y*.5+.5)*ch)+'px'; } }
+  if(bloom) bloom.render(); else renderer.render(scene,camera);
+}
+function resize(){ const w=canvas.clientWidth||1,hh=canvas.clientHeight||1; renderer.setSize(w,hh,false); camera.aspect=w/hh; camera.updateProjectionMatrix(); sizeBg(); if(bloom) bloom.setSize(w,hh); }
+if(EffectComposer){ bloom=new EffectComposer(renderer); bloom.addPass(new RenderPass(scene,camera)); bloom.addPass(new UnrealBloomPass(new THREE.Vector2(1,1),.8,.8,.85)); }
+addEventListener('resize',resize); resize(); tick();
+
+/* chat */
+const msgs=$('#msgs'), ph=$('#ph');
+function bubble(cls,html){ const b=document.createElement('div'); b.className='b '+cls; b.innerHTML=html; msgs.appendChild(b); while(msgs.children.length>4) msgs.removeChild(msgs.firstChild); return b; }
+async function typeInto(text,sp=58){ ph.classList.remove('empty'); ph.innerHTML=''; for(let i=0;i<text.length;i++){ ph.innerHTML=text.slice(0,i+1)+'<span class="caret"></span>'; await sleep(sp+Math.random()*40);} }
+async function thinking(ms=1000){ const t=bubble('them','<span class="dots"><i></i><i></i><i></i></span>'); await sleep(ms); t.remove(); }
+function setCap(s,t){ $('#capstep').textContent=s; $('#captxt').textContent=t; $('#caption').style.opacity=1; }
+
+let running=false;
+async function runReel(){
+  if(running) return; running=true;
+  msgs.innerHTML=''; ph.classList.add('empty'); ph.textContent='Ask Emrys about your project…';
+  $('#caption').style.opacity=0; $('#finale').classList.remove('show'); $('#replay').classList.remove('show'); $('#nowbuild').style.opacity=0;
+  if(active){ active.el.remove(); active=null; } marker.visible=false;
+  while(!started) await sleep(150);
+  await sleep(400);
+
+  // STEP 1 — the user asks
+  bubble('them','Hi! I’m <b>Emrys</b> 🎓 Want me to show you the brain of your build?'); await sleep(1300);
+  await typeInto('Show me the ESP32'); await sleep(380);
+  const s=$('#send'); s.classList.add('go'); setTimeout(()=>s.classList.remove('go'),260);
+  bubble('me','Show me the ESP32'); ph.innerHTML=''; ph.classList.add('empty'); ph.textContent='Ask Emrys about your project…';
+  await sleep(450); await thinking(1050);
+  bubble('them','Here it is — the <b>ESP32-S3 AI Cam</b>. Let me walk you through every part. 👇');
+  $('#nowbuild').style.transition='opacity .6s'; $('#nowbuild').style.opacity=1;
+  await sleep(1500);
+
+  // Emrys guides each part
+  for(let i=0;i<TOUR.length;i++){ setCap(TOUR[i].step,TOUR[i].cap); showPart(i); bubble('them',TOUR[i].say); await sleep(3100); }
+
+  setCap('That’s the brain','One module — sensing, thinking, and connecting. The heart of Mino. ✅');
+  marker.visible=false; if(active){ active.el.classList.remove('on'); }
+  bubble('them','That’s the whole brain — next, we drop it into the housing and bring Mino to life. ⚡');
+  await sleep(2600); $('#caption').style.opacity=0;
+  $('#finale').classList.add('show'); await sleep(4600);
+  $('#replay').classList.add('show'); running=false;
+}
+$('#replay').addEventListener('click',runReel);
+buildEsp(); await sleep(300); runReel();
+setInterval(()=>{ if(!running && $('#finale').classList.contains('show')) runReel(); },1600);
+</script>
+</body>
+</html>
