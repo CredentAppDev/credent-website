@@ -130,7 +130,7 @@
 // The WS endpoint is configurable; defaults to the Credent voice server.
 const VOICE_WS = (location.hash.match(/ws=([^&]+)/)?.[1] &&
                   decodeURIComponent(location.hash.match(/ws=([^&]+)/)[1]))
-              || "wss://credent-backend.onrender.com:8765/helper";
+              || "wss://credent-voice.onrender.com/helper";
 
 const $ = (id) => document.getElementById(id);
 let stream = null, ws = null, frameTrack = null;
