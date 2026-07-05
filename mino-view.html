@@ -180,14 +180,19 @@ function stopShare(){
 }
 
 // Grab one still frame from the shared stream as a JPEG data URL.
+// Downscaled to <=1366 px wide: full-HD frames are token-heavy for the vision
+// model and slow every "look" — smaller frames roughly halve per-step latency
+// (keyboard-only control doesn't need pixel-exact coordinates).
 async function captureFrame(quality = 0.7){
   if(!stream) return null;
   const v = $("preview");
   const { w, h } = screenSize();
+  const scale = Math.min(1, 1366 / w);
+  const cw = Math.round(w * scale), ch = Math.round(h * scale);
   const canvas = document.createElement("canvas");
-  canvas.width = w; canvas.height = h;
-  canvas.getContext("2d").drawImage(v, 0, 0, w, h);
-  return { image: canvas.toDataURL("image/jpeg", quality), w, h };
+  canvas.width = cw; canvas.height = ch;
+  canvas.getContext("2d").drawImage(v, 0, 0, cw, ch);
+  return { image: canvas.toDataURL("image/jpeg", quality), w: cw, h: ch };
 }
 
 // Self-test: capture a frame and open it so the user can confirm capture works
