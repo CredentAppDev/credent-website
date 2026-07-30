@@ -101,6 +101,14 @@ function runIntro() {
     });
   });
 
+  // Division panels stagger
+  if (document.querySelector('.divisions-stage')) {
+    gsap.from('.division-panel', {
+      y: 80, opacity: 0, duration: 1.1, stagger: 0.16, ease: 'power3.out',
+      scrollTrigger: { trigger: '.divisions-stage', start: 'top 78%' },
+    });
+  }
+
   // Service cards stagger
   gsap.from('.service-card', {
     y: 80, opacity: 0, duration: 1, stagger: 0.12, ease: 'power3.out',
