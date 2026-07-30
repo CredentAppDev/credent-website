@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=10" />
-<link rel="stylesheet" href="divisions.css?v=1" />
+<link rel="stylesheet" href="divisions.css?v=3" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -109,7 +109,7 @@
 <section class="div-section" id="offer">
   <div class="div-section-inner">
     <div class="section-tag"><span>01</span><span>WHAT WE DO</span></div>
-    <h2 class="div-h2 rise">Four ways Credent works <em>inside industry</em>.</h2>
+    <h2 class="div-h2 rise">Five ways Credent works <em>inside industry</em>.</h2>
     <p class="div-lead rise">
       Everyone is handed the future and quietly left to figure it out alone. Not on our floor.
     </p>
@@ -139,6 +139,54 @@
         <h3>Readiness Analytics</h3>
         <p>Progress, impact and performance tracking across your workforce — so you know who is ready for which machine before the stakes are real.</p>
       </article>
+      <article class="offer-card rise" data-cursor="hover">
+        <span class="offer-num">05</span>
+        <div class="offer-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 2v2m6-2v2M9 20v2m6-2v2M2 9h2m-2 6h2m16-6h2m-2 6h2"/></svg></div>
+        <h3>Custom PCB &amp; Hardware</h3>
+        <p>We design and manufacture our own circuit boards — schematic capture, multilayer layout, DRC-verified routing, fabrication and assembly. When the board your line needs does not exist, we build it.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HARDWARE WE BUILD ============== -->
+<!-- Real boards, photographed. The single most convincing thing on this page:
+     "electronics manufacturer" is a claim people discount by default, and a
+     fabricated board with our own name on the silkscreen settles it without
+     asking anyone to take our word for it. -->
+<section class="div-section" id="hardware" style="padding-top:0;">
+  <div class="div-section-inner">
+    <div class="section-tag"><span>02</span><span>HARDWARE WE BUILD</span></div>
+    <h2 class="div-h2 rise">Boards we designed, <em>and had made</em>.</h2>
+    <p class="div-lead rise">
+      Not renders of someone else's reference design. These are our own boards — routed here,
+      fabricated, and populated.
+    </p>
+
+    <div class="board-grid">
+      <figure class="board-card rise">
+        <img src="assets/images/pcb-mezzanine.jpg" alt="Credent robot I/O mezzanine board, a four-layer printed circuit board with CAN, RS-485, opto-isolated inputs and valve driver circuitry, silkscreened Credent Company Limited Rev 1" loading="lazy" width="1200" height="956" />
+        <figcaption>
+          <h3>Robot I/O Mezzanine</h3>
+          <p>
+            Four-layer board carrying the field interface for a robotic picking cell — CAN, RS-485,
+            opto-isolated e-stop inputs, vacuum valve drivers and PWM servo channels, with 24&nbsp;V
+            field wiring isolated from the compute board. Designed here from a blank schematic.
+          </p>
+        </figcaption>
+      </figure>
+
+      <figure class="board-card rise">
+        <img src="assets/images/pcb-carrier.jpg" alt="Credent vision-compute carrier board, an eight-layer printed circuit board for a Kria K26 system-on-module with Ethernet, USB, MIPI camera and display interfaces" loading="lazy" width="1200" height="1040" />
+        <figcaption>
+          <h3>Vision-Compute Carrier</h3>
+          <p>
+            Eight-layer carrier for a Kria K26 vision-compute module — gigabit Ethernet, USB, MIPI
+            camera lanes, display output and the power tree behind them. Built on an open-source
+            baseline and customised for the picking cell it runs.
+          </p>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -146,7 +194,7 @@
 <!-- ============== HOW A PILOT RUNS ============== -->
 <section class="div-section" id="process" style="padding-top:0;">
   <div class="div-section-inner">
-    <div class="section-tag"><span>02</span><span>HOW A PILOT RUNS</span></div>
+    <div class="section-tag"><span>03</span><span>HOW A PILOT RUNS</span></div>
     <h2 class="div-h2 rise">From first visit to a <em>trained floor</em>.</h2>
 
     <div class="process">
