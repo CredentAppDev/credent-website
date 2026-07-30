@@ -28,7 +28,7 @@
   const heroBtn = document.querySelector("[data-os-download]");
   if (heroBtn) {
     if (os === "windows") {
-      heroBtn.setAttribute("href", "https://github.com/CredentAppDev/credent-website/releases/download/v1.4.4/Credent-Setup-1.4.4.exe");
+      heroBtn.setAttribute("href", "https://github.com/CredentAppDev/credent-website/releases/download/v1.5.1/Credent-Setup-1.5.1.exe");
       heroBtn.setAttribute("download", "");
       heroBtn.querySelector("[data-os-label]").textContent = "Download for Windows";
       if (hint) hint.textContent = "Windows 10 / 11 · 81 MB · also available for macOS";
