@@ -28,12 +28,12 @@
   const heroBtn = document.querySelector("[data-os-download]");
   if (heroBtn) {
     if (os === "windows") {
-      heroBtn.setAttribute("href", "https://github.com/CredentAppDev/credent-website/releases/download/v1.6.3/Credent-Setup-1.6.3.exe");
+      heroBtn.setAttribute("href", "https://github.com/CredentAppDev/credent-website/releases/download/v1.6.5/Credent-Setup-1.6.5.exe");
       heroBtn.setAttribute("download", "");
       heroBtn.querySelector("[data-os-label]").textContent = "Download for Windows";
       if (hint) hint.textContent = "Windows 10 / 11 · 82 MB · also available for macOS";
     } else if (os === "mac") {
-      heroBtn.setAttribute("href", "https://github.com/CredentAppDev/credent-website/releases/download/v1.6.3/Credent-1.6.3-arm64.dmg");
+      heroBtn.setAttribute("href", "https://github.com/CredentAppDev/credent-website/releases/download/v1.6.5/Credent-1.6.5-arm64.dmg");
       heroBtn.setAttribute("download", "");
       heroBtn.querySelector("[data-os-label]").textContent = "Download for macOS";
       if (hint) hint.textContent = "macOS 10.15+ · Intel & Apple Silicon (Rosetta) · also on Windows";
