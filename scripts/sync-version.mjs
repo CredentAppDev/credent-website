@@ -46,10 +46,28 @@ async function githubJson(path) {
   return res.json();
 }
 
-/** Latest non-draft release version (without the leading "v") + its assets. */
+/**
+ * Latest non-draft release (without the leading "v") + its assets.
+ *
+ * Asks /releases/latest FIRST and only then falls back to listing. For this
+ * repo the list endpoint returns an empty array even though releases plainly
+ * exist and /releases/latest answers correctly — so the list-only version of
+ * this function always threw "No published release found". It went unnoticed
+ * because CI passes --version explicitly; only a manual run with no argument
+ * ever reached it.
+ *
+ * /releases/latest is also the more correct source: GitHub excludes drafts and
+ * pre-releases from it, which is exactly what a download button wants.
+ */
 async function latestRelease() {
+  try {
+    const rel = await githubJson(`/repos/${REPO}/releases/latest`);
+    if (rel && rel.tag_name) return rel;
+  } catch (e) {
+    console.warn(`/releases/latest unavailable (${e.message}) — falling back to the release list`);
+  }
   const releases = await githubJson(`/repos/${REPO}/releases?per_page=20`);
-  const rel = releases.find((r) => !r.draft);
+  const rel = Array.isArray(releases) ? releases.find((r) => !r.draft && !r.prerelease) : null;
   if (!rel) throw new Error('No published release found');
   return rel;
 }

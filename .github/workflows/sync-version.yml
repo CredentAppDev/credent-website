@@ -24,7 +24,10 @@ name: Sync site version
 
 on:
   release:
-    types: [published, edited]
+    # `published` only. `edited` also fires for each asset upload and metadata
+    # tweak electron-builder makes, which started three overlapping runs for one
+    # release — they then raced each other's push to main.
+    types: [published]
   repository_dispatch:
     types: [desktop-released]
   workflow_dispatch:
@@ -51,29 +54,49 @@ jobs:
         with:
           node-version: 20
 
-      # A release event deliberately resolves to nothing here, so the script
-      # falls back to GitHub's "latest release" pointer. That pointer skips
-      # drafts and pre-releases, whereas github.event.release.tag_name would
-      # happily point the download button at a pre-release.
+      # A release event carries its own tag, and we USE it rather than letting
+      # the script look up "the latest release": this repo's REST
+      # /releases list endpoint returns [] even though /releases/latest works,
+      # so the lookup path throws "No published release found". That was hidden
+      # for months because the dispatch path always passed a version.
+      #
+      # Values arrive as env vars, not inline ${{ }} in the script body — a tag
+      # name is attacker-influencable text and must not be pasted into a shell.
       - name: Resolve target version
         id: ver
+        env:
+          INPUT_VERSION:    ${{ github.event.inputs.version }}
+          DISPATCH_VERSION: ${{ github.event.client_payload.version }}
+          RELEASE_TAG:      ${{ github.event.release.tag_name }}
+          RELEASE_PRE:      ${{ github.event.release.prerelease }}
         run: |
-          V="${{ github.event.inputs.version || github.event.client_payload.version }}"
+          V="${INPUT_VERSION:-$DISPATCH_VERSION}"
+          if [ -z "$V" ] && [ -n "$RELEASE_TAG" ]; then
+            if [ "$RELEASE_PRE" = "true" ]; then
+              echo "$RELEASE_TAG is a pre-release — leaving the site on the current stable version."
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            V="${RELEASE_TAG#v}"
+          fi
           echo "version=$V" >> "$GITHUB_OUTPUT"
           echo "Target version: ${V:-<latest release>}"
 
       - name: Rewrite site version strings
         id: sync
+        if: steps.ver.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_VERSION: ${{ steps.ver.outputs.version }}
         run: |
-          if [ -n "${{ steps.ver.outputs.version }}" ]; then
-            node scripts/sync-version.mjs --version "${{ steps.ver.outputs.version }}"
+          if [ -n "$TARGET_VERSION" ]; then
+            node scripts/sync-version.mjs --version "$TARGET_VERSION"
           else
             node scripts/sync-version.mjs
           fi
 
       - name: Commit & push if changed
+        if: steps.ver.outputs.skip != 'true'
         run: |
           if [ -z "$(git status --porcelain)" ]; then
             echo "Already in sync — nothing to commit."
