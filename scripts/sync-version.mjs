@@ -87,13 +87,26 @@ async function resolveMacVersion(version) {
     const target = await githubJson(`/repos/${REPO}/releases/tags/v${version}`).catch(() => null);
     if (target && hasDmg(target)) return version;
 
-    const releases = await githubJson(`/repos/${REPO}/releases?per_page=30`);
-    const withDmg = releases.find((r) => !r.draft && !r.prerelease && hasDmg(r));
-    if (withDmg) return String(withDmg.tag_name || '').replace(/^v/, '');
+    // Walk BACK through tags, newest first, asking each tag's release directly.
+    // The /releases LIST endpoint is not usable on this repo — it returns [] even
+    // though releases exist — and when it did, this function "fell back" to the
+    // very version it had just failed to verify. That is how a Windows-only
+    // release aimed every Mac visitor at a .dmg that was never built.
+    const tags = await githubJson(`/repos/${REPO}/tags?per_page=30`);
+    for (const t of (Array.isArray(tags) ? tags : [])) {
+      if (!/^v\d+\.\d+\.\d+$/.test(t.name || '')) continue;
+      const rel = await githubJson(`/repos/${REPO}/releases/tags/${t.name}`).catch(() => null);
+      if (rel && !rel.draft && !rel.prerelease && hasDmg(rel)) {
+        return String(rel.tag_name).replace(/^v/, '');
+      }
+    }
   } catch (e) {
-    console.warn('mac version lookup failed, falling back:', e.message);
+    console.warn('mac version lookup failed:', e.message);
   }
-  return version;
+  // Nothing could be CONFIRMED to carry a .dmg. Return null so the caller
+  // leaves the mac links exactly as they are. A stale-but-working download
+  // beats a current-looking 404.
+  return null;
 }
 
 async function main() {
@@ -123,8 +136,23 @@ async function main() {
   // URL to the new version regardless — pointing every Mac visitor at a file
   // that was never uploaded. Only move the dmg to a version that actually has
   // one; otherwise leave it on the newest release that does.
-  const macVersion = await resolveMacVersion(version);
-  if (macVersion !== version) {
+  let macVersion = await resolveMacVersion(version);
+  if (macVersion === null) {
+    // Nothing could be CONFIRMED to carry a .dmg. Rather than guess, keep
+    // whatever the site already points at — that version was verified the last
+    // time this ran, and a stale-but-working download beats a fresh-looking
+    // 404. Read it from index.html so links AND the "vX beta" note stay in
+    // agreement; leaving macVersion null would let the general beta-note rule
+    // relabel a link it isn't allowed to move.
+    const idx = join(ROOT, 'index.html');
+    const onPage = existsSync(idx)
+      ? (readFileSync(idx, 'utf8').match(/Credent-(\d+\.\d+\.\d+)-arm64\.dmg/) || [])[1]
+      : null;
+    macVersion = onPage || null;
+    console.log(macVersion
+      ? `macOS: no .dmg confirmed for any release — holding mac links at v${macVersion} (unchanged)`
+      : 'macOS: no .dmg confirmed and none referenced on the page — skipping mac rewrites');
+  } else if (macVersion !== version) {
     console.log(`macOS: v${version} has no .dmg — holding mac links at v${macVersion}`);
   }
 
@@ -143,20 +171,29 @@ async function main() {
       /\/releases\/download\/v\d+\.\d+\.\d+\/Credent-Setup-\d+\.\d+\.\d+\.exe/g,
       `/releases/download/v${version}/Credent-Setup-${version}.exe`,
     );
-    after = after.replace(
-      /\/releases\/download\/v\d+\.\d+\.\d+\/Credent-\d+\.\d+\.\d+-arm64\.dmg/g,
-      `/releases/download/v${macVersion}/Credent-${macVersion}-arm64.dmg`,
-    );
+    // macVersion === null means "no .dmg could be confirmed anywhere" — skip
+    // every mac rewrite and leave whatever is on the page, rather than moving
+    // the link to a file that does not exist.
+    if (macVersion) {
+      after = after.replace(
+        /\/releases\/download\/v\d+\.\d+\.\d+\/Credent-\d+\.\d+\.\d+-arm64\.dmg/g,
+        `/releases/download/v${macVersion}/Credent-${macVersion}-arm64.dmg`,
+      );
+    }
     // bare filename references (install steps <code>…</code>)
     after = after.replace(/Credent-Setup-\d+\.\d+\.\d+\.exe/g, `Credent-Setup-${version}.exe`);
-    after = after.replace(/Credent-\d+\.\d+\.\d+-arm64\.dmg/g, `Credent-${macVersion}-arm64.dmg`);
+    if (macVersion) {
+      after = after.replace(/Credent-\d+\.\d+\.\d+-arm64\.dmg/g, `Credent-${macVersion}-arm64.dmg`);
+    }
 
     // 2) "vX.Y.Z beta" notes. General rule first, then the dmg note corrects
     //    itself back to the mac version — the specific rule has to run LAST or
     //    the general one clobbers it and the note claims a build that the link
     //    beside it does not point to.
     after = after.replace(/v\d+\.\d+\.\d+ beta/g, `v${version} beta`);
-    after = after.replace(/\.dmg · v\d+\.\d+\.\d+ beta/g, `.dmg · v${macVersion} beta`);
+    if (macVersion) {
+      after = after.replace(/\.dmg · v\d+\.\d+\.\d+ beta/g, `.dmg · v${macVersion} beta`);
+    }
     // 3) "Version X.Y.Z · Beta" eyebrow
     after = after.replace(/Version \d+\.\d+\.\d+/g, `Version ${version}`);
     // 4) JSON-LD softwareVersion
